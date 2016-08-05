@@ -20,6 +20,7 @@ public class AppointmentBookGwt implements EntryPoint {
   @VisibleForTesting
   Button button;
   TextBox textBox;
+  Button helpButton;
 
   public AppointmentBookGwt() {
     this(new Alerter() {
@@ -46,7 +47,21 @@ public class AppointmentBookGwt implements EntryPoint {
       }
     });
 
+    helpButton = new Button("HELP");
+    helpButton.addClickHandler(new ClickHandler() {
+      @Override
+      public void onClick(ClickEvent clickEvent) {
+        printReadme();
+      }
+    });
+
+    
     this.textBox = new TextBox();
+  }
+
+  private void printReadme() {
+    alerter.alert("Name: DJ Sabo\nProject 5: Rich Internet Application For Appointment Book\n");
+
   }
 
   private void createAppointments() {
@@ -92,6 +107,7 @@ public class AppointmentBookGwt implements EntryPoint {
   public void onModuleLoad() {
     RootPanel rootPanel = RootPanel.get();
     rootPanel.add(button);
+    rootPanel.add(helpButton);
 
     DockPanel panel = new DockPanel();
     panel.add(new Label("Number of appointments"), DockPanel.WEST);
