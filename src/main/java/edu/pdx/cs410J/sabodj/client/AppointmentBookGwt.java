@@ -22,6 +22,8 @@ public class AppointmentBookGwt implements EntryPoint {
   TextBox textBox;
   Button helpButton;
 
+  TextArea mainTextArea;
+
   public AppointmentBookGwt() {
     this(new Alerter() {
       @Override
@@ -47,6 +49,9 @@ public class AppointmentBookGwt implements EntryPoint {
       }
     });
 
+    this.mainTextArea = new TextArea();
+    mainTextArea.setVisible(false);
+
     helpButton = new Button("HELP");
     helpButton.addClickHandler(new ClickHandler() {
       @Override
@@ -60,7 +65,11 @@ public class AppointmentBookGwt implements EntryPoint {
   }
 
   private void printReadme() {
-    alerter.alert("Name: DJ Sabo\nProject 5: Rich Internet Application For Appointment Book\n");
+    //alerter.alert("Name: DJ Sabo\nProject 5: Rich Internet Application For Appointment Book\n");
+    this.mainTextArea.setVisible(true);
+    this.mainTextArea.setCharacterWidth(80);
+    this.mainTextArea.setVisibleLines(20);
+    this.mainTextArea.setText("Name: DJ Sabo\nProject 5: Rich Internet Application For Appointment Book\n");
 
   }
 
@@ -114,6 +123,13 @@ public class AppointmentBookGwt implements EntryPoint {
     panel.add(textBox, DockPanel.CENTER);
 
     rootPanel.add(panel);
+
+    DockPanel panel2 = new DockPanel();
+    panel2.add(this.mainTextArea, DockPanel.CENTER);
+
+    rootPanel.add(panel2);
+
+
   }
 
   @VisibleForTesting
