@@ -31,8 +31,11 @@ public class AppointmentBookGwt implements EntryPoint {
   TextBox     descriptionBox;
   TextBox     beginDate;
   TextBox     beginTime;
+  ListBox     beginA;
   TextBox     endDate;
   TextBox     endTime;
+  ListBox     endA;
+
   Button      addApptButton;
 
   VerticalPanel   searchPanel;
@@ -138,8 +141,14 @@ public class AppointmentBookGwt implements EntryPoint {
     this.descriptionBox = new TextBox();
     this.beginDate = new TextBox();
     this.beginTime = new TextBox();
+    this.beginA = new ListBox();
+    this.beginA.addItem("AM");
+    this.beginA.addItem("PM");
     this.endDate = new TextBox();
     this.endTime = new TextBox();
+    this.endA = new ListBox();
+    this.endA.addItem("AM");
+    this.endA.addItem("PM");
 
     // Search Items
     searchPanel = new VerticalPanel();
@@ -259,7 +268,7 @@ public class AppointmentBookGwt implements EntryPoint {
     rootPanel.add(viewAppointmenBookButton);
     rootPanel.add(addAppointmentButton);
     rootPanel.add(searchAppointmentButton);
-    rootPanel.add(button);
+  //  rootPanel.add(button);
 
 //    DockPanel panel = new DockPanel();
 //    panel = new DockPanel();
@@ -281,12 +290,20 @@ public class AppointmentBookGwt implements EntryPoint {
     apptPanel1.add(new Label("Description"));
     apptPanel1.add(this.descriptionBox);
     HorizontalPanel apptPanel2 = new HorizontalPanel();
-    apptPanel2.add(new Label("Begin Date MM/DD/YYYY"));
+    apptPanel2.add(new Label("Begin Date"));
     apptPanel2.add(this.beginDate);
-    apptPanel2.add(new Label("Begin Time hh:mm"));
+    apptPanel2.add(new Label("Begin Time"));
     apptPanel2.add(this.beginTime);
+    apptPanel2.add(this.beginA);
+    HorizontalPanel apptPanel3 = new HorizontalPanel();
+    apptPanel3.add(new Label("End Date"));
+    apptPanel3.add(this.endDate);
+    apptPanel3.add(new Label("End Time"));
+    apptPanel3.add(this.endTime);
+    apptPanel3.add(this.endA);
     addApptPanel.add(apptPanel1);
     addApptPanel.add(apptPanel2);
+    addApptPanel.add(apptPanel3);
     rootPanel.add(this.addApptPanel);
 
 
