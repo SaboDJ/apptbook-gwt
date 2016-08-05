@@ -26,7 +26,7 @@ public class AppointmentBookGwt implements EntryPoint {
 
   DockPanel   textOnlyPanel;
 
-  DockPanel   addApptPanel;
+  VerticalPanel   addApptPanel;
   TextBox     ownerBox;
   TextBox     descriptionBox;
   TextBox     beginDate;
@@ -148,7 +148,7 @@ public class AppointmentBookGwt implements EntryPoint {
     this.textBox = new TextBox();
 
     this.textOnlyPanel = new DockPanel();
-    this.addApptPanel = new DockPanel();
+    this.addApptPanel = new VerticalPanel();
   }
 
   private void printReadme() {
@@ -229,11 +229,18 @@ public class AppointmentBookGwt implements EntryPoint {
     rootPanel.add(textOnlyPanel);
 
     // Setup Add Appointment panel
-    addApptPanel.setVisible(false);
-    addApptPanel.add(new Label("Owner"), DockPanel.WEST);
-    addApptPanel.add(this.ownerBox, DockPanel.EAST);
-//    addApptPanel.add(new Label("Description"), DockPanel.EAST);
-//    addApptPanel.add(this.descriptionBox, DockPanel.WEST);
+    HorizontalPanel apptPanel1 = new HorizontalPanel();
+    apptPanel1.add(new Label("Owner"));
+    apptPanel1.add(this.ownerBox);
+    apptPanel1.add(new Label("Description"));
+    apptPanel1.add(this.descriptionBox);
+    HorizontalPanel apptPanel2 = new HorizontalPanel();
+    apptPanel2.add(new Label("Begin Date MM/DD/YYYY"));
+    apptPanel2.add(this.beginDate);
+    apptPanel2.add(new Label("Begin Time hh:mm"));
+    apptPanel2.add(this.beginTime);
+    addApptPanel.add(apptPanel1);
+    addApptPanel.add(apptPanel2);
     rootPanel.add(this.addApptPanel);
 
 
@@ -241,6 +248,7 @@ public class AppointmentBookGwt implements EntryPoint {
 //    searchPanel.setVisible(false);
 //    searchPanel.add(new Label("Owner"), DockPanel.NORTH);
 //    addApptPanel.add(this.ownerBox, DockPanel.SOUTH);
+
 
 
     addApptButton.setVisible(false);
