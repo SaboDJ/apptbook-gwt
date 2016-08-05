@@ -35,7 +35,7 @@ public class AppointmentBookGwt implements EntryPoint {
   TextBox     endTime;
   Button      addApptButton;
 
-  DockPanel   searchPanel;
+  VerticalPanel   searchPanel;
   Button      searchButton;
 
   TextBox     textBox;
@@ -65,6 +65,7 @@ public class AppointmentBookGwt implements EntryPoint {
         addApptPanel.setVisible(false);
         addApptButton.setVisible(false);
         searchButton.setVisible(false);
+        searchPanel.setVisible(false);
         textOnlyPanel.setVisible(true);
         printReadme();
       }
@@ -77,6 +78,7 @@ public class AppointmentBookGwt implements EntryPoint {
         addApptPanel.setVisible(false);
         addApptButton.setVisible(false);
         searchButton.setVisible(false);
+        searchPanel.setVisible(false);
         textOnlyPanel.setVisible(true);
         viewAppointments();
       }
@@ -88,9 +90,9 @@ public class AppointmentBookGwt implements EntryPoint {
       public void onClick(ClickEvent clickEvent) {
         textOnlyPanel.setVisible(false);
         searchButton.setVisible(false);
+        searchPanel.setVisible(false);
         addApptPanel.setVisible(true);
         addApptButton.setVisible(true);
-        addAppointment();
       }
     });
 
@@ -98,22 +100,38 @@ public class AppointmentBookGwt implements EntryPoint {
     searchAppointmentButton.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(ClickEvent clickEvent) {
+        textOnlyPanel.setVisible(false);
         addApptPanel.setVisible(false);
         addApptButton.setVisible(false);
-       // searchPanel.setVisible(true);
+        searchPanel.setVisible(true);
         searchButton.setVisible(true);
        // Call the search method
       }
     });
 
     // Add Appt Items
+    this.addApptPanel = new VerticalPanel();
     addApptButton = new Button("Add");
     addApptButton.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(ClickEvent clickEvent) {
-        addApptButton.setVisible(false);
-        addApptPanel.setVisible(false);
-        //addAppointmentToBook();
+        if (addAppointment()) {
+          addApptButton.setVisible(false);
+          addApptPanel.setVisible(false);
+
+          // Print out the confirmation message
+          StringBuffer output = new StringBuffer();
+          output.append(getOwner());
+          output.append("'s new appointment was added to his appointment book.");
+          mainTextArea.setCharacterWidth(50);
+          mainTextArea.setVisibleLines(1);
+          mainTextArea.setText(output.toString());
+          textOnlyPanel.setVisible(true);
+
+          // Clear the text blocks
+          ownerBox.setText("");
+          descriptionBox.setText("");
+        }
       }
     });
     this.ownerBox = new TextBox();
@@ -124,6 +142,7 @@ public class AppointmentBookGwt implements EntryPoint {
     this.endTime = new TextBox();
 
     // Search Items
+    searchPanel = new VerticalPanel();
     searchButton = new Button("Search");
     searchButton.addClickHandler(new ClickHandler() {
       @Override
@@ -148,7 +167,6 @@ public class AppointmentBookGwt implements EntryPoint {
     this.textBox = new TextBox();
 
     this.textOnlyPanel = new DockPanel();
-    this.addApptPanel = new VerticalPanel();
   }
 
   private void printReadme() {
@@ -164,7 +182,19 @@ public class AppointmentBookGwt implements EntryPoint {
     this.mainTextArea.setText("Need to print out all appointments");
   }
 
-  private void addAppointment() {
+
+  private boolean addAppointment(){
+    String owner = getOwner();
+    String description = getDescription();
+    if(owner == null || owner.equals("")){
+      alerter.alert("Owner cannot be empty");
+      return false;
+    }
+    if(description == null || description.equals("")){
+      alerter.alert("Description cannot be empty");
+      return false;
+    }
+    return true;
   }
 
 
@@ -189,6 +219,21 @@ public class AppointmentBookGwt implements EntryPoint {
     String number = this.textBox.getText();
 
     return Integer.parseInt(number);
+  }
+
+  /**
+   * Returns the string contained in the ownerBox textbox
+   */
+  private String getOwner(){
+    return this.ownerBox.getText();
+  }
+
+  /**
+   *
+   * Returns the string contained in the descriptionBox textbox
+   */
+  private String getDescription(){
+    return this.descriptionBox.getText();
   }
 
   private void displayInAlertDialog(AppointmentBook airline) {
@@ -229,6 +274,7 @@ public class AppointmentBookGwt implements EntryPoint {
     rootPanel.add(textOnlyPanel);
 
     // Setup Add Appointment panel
+    addApptPanel.setVisible(false);
     HorizontalPanel apptPanel1 = new HorizontalPanel();
     apptPanel1.add(new Label("Owner"));
     apptPanel1.add(this.ownerBox);
@@ -244,11 +290,14 @@ public class AppointmentBookGwt implements EntryPoint {
     rootPanel.add(this.addApptPanel);
 
 
-//    // Setup Search Panel
+    // Setup Search  panel
 //    searchPanel.setVisible(false);
-//    searchPanel.add(new Label("Owner"), DockPanel.NORTH);
-//    addApptPanel.add(this.ownerBox, DockPanel.SOUTH);
-
+//    HorizontalPanel searchPan1 = new HorizontalPanel();
+//    searchPan1.add(new Label("Owner"));
+//    searchPan1.add(this.ownerBox);
+//    searchPan1.add(searchPan1);
+//    searchPan1.add(apptPanel2);
+//    rootPanel.add(searchPanel);
 
 
     addApptButton.setVisible(false);
