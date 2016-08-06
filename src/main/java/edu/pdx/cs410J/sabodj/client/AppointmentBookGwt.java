@@ -29,12 +29,18 @@ public class AppointmentBookGwt implements EntryPoint {
   VerticalPanel   addApptPanel;
   TextBox     ownerBox;
   TextBox     descriptionBox;
-  TextBox     beginDate;
-  TextBox     beginTime;
-  ListBox     beginA;
-  TextBox     endDate;
-  TextBox     endTime;
-  ListBox     endA;
+  ListBox     beginDay;
+  ListBox     beginMonth;
+  ListBox beginYear;
+  ListBox     beginHour;
+  ListBox     beginMinute;
+  ListBox beginAMPM;
+  ListBox     endDay;
+  ListBox     endMonth;
+  ListBox     endYear;
+  ListBox     endHour;
+  ListBox     endMinute;
+  ListBox endAMPM;
 
   Button      addApptButton;
 
@@ -139,16 +145,18 @@ public class AppointmentBookGwt implements EntryPoint {
     });
     this.ownerBox = new TextBox();
     this.descriptionBox = new TextBox();
-    this.beginDate = new TextBox();
-    this.beginTime = new TextBox();
-    this.beginA = new ListBox();
-    this.beginA.addItem("AM");
-    this.beginA.addItem("PM");
-    this.endDate = new TextBox();
-    this.endTime = new TextBox();
-    this.endA = new ListBox();
-    this.endA.addItem("AM");
-    this.endA.addItem("PM");
+    this.beginDay = setDays();
+    this.beginMonth = setHoursMonths();
+    this.beginYear = setYears();
+    this.beginHour = setHoursMonths();
+    this.beginMinute = setMinutes();
+    this.beginAMPM = setAMPM();
+    this.endDay = setDays();
+    this.endMonth = setHoursMonths();
+    this.endYear = setYears();
+    this.endHour = setHoursMonths();
+    this.endMinute = setMinutes();
+    this.endAMPM = setAMPM();
 
     // Search Items
     searchPanel = new VerticalPanel();
@@ -177,6 +185,65 @@ public class AppointmentBookGwt implements EntryPoint {
 
     this.textOnlyPanel = new DockPanel();
   }
+
+  /**
+   * returns a ListBox containing  1-12 for a hour/month selection
+   */
+  private ListBox setHoursMonths(){
+    ListBox list = new ListBox();
+    for(int i= 1; i < 13; i++){
+      list.addItem(Integer.toString(i));
+    }
+    return list;
+  }
+
+  /**
+   * returns a ListBox containing 1-59 for a minute selection
+   */
+  private ListBox setMinutes(){
+    ListBox list = new ListBox();
+    for(int i= 0; i < 60; i++){
+      list.addItem(Integer.toString(i));
+    }
+    return list;
+  }
+
+  /**
+   * Returns a ListBox containing 1-31 for a day selection
+   */
+  private ListBox setDays(){
+    ListBox list = new ListBox();
+    for(int i= 1; i < 32; i++){
+      list.addItem(Integer.toString(i));
+    }
+    return list;
+  }
+
+  /**
+   * Returns a ListBox containing the years 2010-2020
+   */
+  private ListBox setYears(){
+    ListBox list = new ListBox();
+    for(int i= 2010; i < 2021; i++){
+      list.addItem(Integer.toString(i));
+    }
+    return list;
+  }
+
+  /**
+   * Returns a ListBox containing AM and PM
+   */
+  private ListBox setAMPM(){
+    ListBox list = new ListBox();
+    list.addItem("AM");
+    list.addItem("PM");
+    return list;
+  }
+
+
+
+
+
 
   private void printReadme() {
     this.mainTextArea.setCharacterWidth(80);
@@ -291,16 +358,22 @@ public class AppointmentBookGwt implements EntryPoint {
     apptPanel1.add(this.descriptionBox);
     HorizontalPanel apptPanel2 = new HorizontalPanel();
     apptPanel2.add(new Label("Begin Date"));
-    apptPanel2.add(this.beginDate);
+    apptPanel2.add(this.beginMonth);
+    apptPanel2.add(this.beginDay);
+    apptPanel2.add(this.beginYear);
     apptPanel2.add(new Label("Begin Time"));
-    apptPanel2.add(this.beginTime);
-    apptPanel2.add(this.beginA);
+    apptPanel2.add(this.beginHour);
+    apptPanel2.add(this.beginMinute);
+    apptPanel2.add(this.beginAMPM);
     HorizontalPanel apptPanel3 = new HorizontalPanel();
-    apptPanel3.add(new Label("End Date"));
-    apptPanel3.add(this.endDate);
-    apptPanel3.add(new Label("End Time"));
-    apptPanel3.add(this.endTime);
-    apptPanel3.add(this.endA);
+    apptPanel3.add(new Label("  End Date"));
+    apptPanel3.add(this.endMonth);
+    apptPanel3.add(this.endDay);
+    apptPanel3.add(this.endYear);
+    apptPanel3.add(new Label("  End Time"));
+    apptPanel3.add(this.endHour);
+    apptPanel3.add(this.endMinute);
+    apptPanel3.add(this.endAMPM);
     addApptPanel.add(apptPanel1);
     addApptPanel.add(apptPanel2);
     addApptPanel.add(apptPanel3);
