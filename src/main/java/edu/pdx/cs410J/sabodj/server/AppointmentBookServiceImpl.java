@@ -39,7 +39,7 @@ public class AppointmentBookServiceImpl extends RemoteServiceServlet implements 
   public ArrayList<AppointmentBook> getAppointmentBook(String owner) {
     ArrayList<AppointmentBook> list = new ArrayList<>();
     // if we dont have any save Appointment Books, return empty list
-    if (data == null || data.size() == 0)
+    if (data.size() == 0)
       return list;
     // if no owner was passed in, return all Appointment Books
     if (owner == null) {
@@ -85,10 +85,6 @@ public class AppointmentBookServiceImpl extends RemoteServiceServlet implements 
 
   @Override
   public String addAppointment(String owner, Appointment appt) {
-//    if(data == null){
-//      data = new HashMap<>();
-//    }
-
     AppointmentBook book = data.get(owner);
     if(book == null){
       book = new AppointmentBook(owner, appt);

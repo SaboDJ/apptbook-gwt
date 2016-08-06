@@ -21,6 +21,8 @@ public class AppointmentBookGwt implements EntryPoint {
 
   @VisibleForTesting
   private  AppointmentBookServiceAsync async;
+
+  // Main
   Button      button;
   Button      helpButton;
   Button      viewAppointmenBookButton;
@@ -29,14 +31,20 @@ public class AppointmentBookGwt implements EntryPoint {
 
   DockPanel   textOnlyPanel;
 
+  // View Appointments
+  HorizontalPanel viewApptsPanel;
+  ListBox     ownersList;
+  TextBox     viewApptTextBox;
+
+  // Add Appointment
   VerticalPanel   addApptPanel;
   TextBox     ownerBox;
   TextBox     descriptionBox;
   TimeFields  begintTimeFields;
   TimeFields  endTimeFields;
-
   Button      addApptButton;
 
+  // Search Appointments
   VerticalPanel   searchPanel;
   Button      searchButton;
 
@@ -71,6 +79,7 @@ public class AppointmentBookGwt implements EntryPoint {
         searchButton.setVisible(false);
         searchPanel.setVisible(false);
         textOnlyPanel.setVisible(true);
+        viewApptsPanel.setVisible(false);
         printReadme();
       }
     });
@@ -83,7 +92,11 @@ public class AppointmentBookGwt implements EntryPoint {
         addApptButton.setVisible(false);
         searchButton.setVisible(false);
         searchPanel.setVisible(false);
-        textOnlyPanel.setVisible(true);
+        textOnlyPanel.setVisible(false);
+
+        setOwnersList();
+        viewApptsPanel.setVisible(true);
+
         viewAppointmentBook();
       }
     });
@@ -97,6 +110,7 @@ public class AppointmentBookGwt implements EntryPoint {
         searchPanel.setVisible(false);
         addApptPanel.setVisible(true);
         addApptButton.setVisible(true);
+        viewApptsPanel.setVisible(false);
       }
     });
 
@@ -109,9 +123,16 @@ public class AppointmentBookGwt implements EntryPoint {
         addApptButton.setVisible(false);
         searchPanel.setVisible(true);
         searchButton.setVisible(true);
+        viewApptsPanel.setVisible(false);
        // Call the search method
       }
     });
+
+    // View Appointment
+    viewApptsPanel = new HorizontalPanel();
+    ownersList = new ListBox();
+    setOwnersList();
+    viewApptTextBox = new TextBox();
 
     // Add Appt Items
     this.addApptPanel = new VerticalPanel();
@@ -178,7 +199,28 @@ public class AppointmentBookGwt implements EntryPoint {
   private void viewAppointments() {
     this.mainTextArea.setCharacterWidth(120);
     this.mainTextArea.setVisibleLines(40);
+    setOwnersList();
     this.mainTextArea.setText("Need to print out all appointments");
+  }
+
+  /**
+   * Returns a ListBox containing the names of all the owners stored on the server
+   */
+  public void setOwnersList() {
+    ownersList.clear();
+    ownersList.addItem("All");
+    this.async.getOwners( new AsyncCallback<ArrayList<String>>() {
+      @Override
+      public void onSuccess(ArrayList<String> owners) {
+        for (String owner : owners) {
+          ownersList.addItem(owner);
+        }
+      }
+      @Override
+      public void onFailure(Throwable throwable) {
+        alerter.alert("Failed to get list of owners");
+      }
+    });
   }
 
 
@@ -336,6 +378,12 @@ public class AppointmentBookGwt implements EntryPoint {
     textOnlyPanel.add(this.mainTextArea, DockPanel.CENTER);
     rootPanel.add(textOnlyPanel);
 
+    // Setup View Appointments Panel
+    viewApptsPanel.setVisible(false);
+    viewApptsPanel.add(ownersList);
+    viewApptsPanel.add(viewApptTextBox);
+    rootPanel.add(viewApptsPanel);
+
     // Setup Add Appointment panel
     addApptPanel.setVisible(false);
     HorizontalPanel apptPanel1 = new HorizontalPanel();
@@ -390,6 +438,8 @@ public class AppointmentBookGwt implements EntryPoint {
 
 
   }
+
+
 
   @VisibleForTesting
   interface Alerter {
