@@ -6,6 +6,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import java.util.ArrayList;
 
 
+
 /**
  * A GWT remote service that returns a dummy appointment book
  */
@@ -20,5 +21,7 @@ public interface AppointmentBookService extends RemoteService {
   public ArrayList<AppointmentBook> getAppointmentBook(String owner);
 
   public String addAppointment(String owner, Appointment appt);
+
+  public ArrayList<String> getOwners();
 
 }

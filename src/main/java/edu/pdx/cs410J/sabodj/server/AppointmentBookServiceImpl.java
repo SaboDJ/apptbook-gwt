@@ -7,15 +7,17 @@ import edu.pdx.cs410J.sabodj.client.AppointmentBookService;
 import edu.pdx.cs410J.sabodj.client.PrettyPrinter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+
 
 /**
  * The server-side implementation of the division service
  */
 public class AppointmentBookServiceImpl extends RemoteServiceServlet implements AppointmentBookService
 {
-  private Map<String, AppointmentBook> data;
+  private Map<String, AppointmentBook> data = new HashMap<>();
 
 
 //  @Override
@@ -83,9 +85,9 @@ public class AppointmentBookServiceImpl extends RemoteServiceServlet implements 
 
   @Override
   public String addAppointment(String owner, Appointment appt) {
-    if(data == null){
-      data = new HashMap<>();
-    }
+//    if(data == null){
+//      data = new HashMap<>();
+//    }
 
     AppointmentBook book = data.get(owner);
     if(book == null){
@@ -97,6 +99,16 @@ public class AppointmentBookServiceImpl extends RemoteServiceServlet implements 
       book.addAppointment(appt);
       return owner + "'s appointment was added to their Appointment Book\n";
     }
+  }
+
+  @Override
+  public ArrayList<String> getOwners() {
+    ArrayList<String> list = new ArrayList<>();
+    for (String owner : data.keySet() ){
+      list.add(owner);
+    }
+    Collections.sort(list);
+    return list;
   }
 
 }

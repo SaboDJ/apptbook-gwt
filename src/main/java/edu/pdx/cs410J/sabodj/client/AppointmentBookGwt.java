@@ -34,18 +34,6 @@ public class AppointmentBookGwt implements EntryPoint {
   TextBox     descriptionBox;
   TimeFields  begintTimeFields;
   TimeFields  endTimeFields;
-//  ListBox     beginDay;
-//  ListBox     beginMonth;
-//  ListBox     beginYear;
-//  ListBox     beginHour;
-//  ListBox     beginMinute;
-//  ListBox     beginAMPM;
-//  ListBox     endDay;
-//  ListBox     endMonth;
-//  ListBox     endYear;
-//  ListBox     endHour;
-//  ListBox     endMinute;
-//  ListBox     endAMPM;
 
   Button      addApptButton;
 
@@ -147,8 +135,6 @@ public class AppointmentBookGwt implements EntryPoint {
           // Clear the text blocks
           ownerBox.setText("");
           descriptionBox.setText("");
-//          resetBeginTime();
-//          resetEndTime();
           begintTimeFields.reset();
           endTimeFields.reset();
 
@@ -159,18 +145,6 @@ public class AppointmentBookGwt implements EntryPoint {
     this.descriptionBox = new TextBox();
     this.begintTimeFields = new TimeFields();
     this.endTimeFields = new TimeFields();
-//    this.beginDay = setDays();
-//    this.beginMonth = setHoursMonths();
-//    this.beginYear = setYears();
-//    this.beginHour = setHoursMonths();
-//    this.beginMinute = setMinutes();
-//    this.beginAMPM = setAMPM();
-//    this.endDay = setDays();
-//    this.endMonth = setHoursMonths();
-//    this.endYear = setYears();
-//    this.endHour = setHoursMonths();
-//    this.endMinute = setMinutes();
-//    this.endAMPM = setAMPM();
 
     // Search Items
     searchPanel = new VerticalPanel();
@@ -184,11 +158,8 @@ public class AppointmentBookGwt implements EntryPoint {
       }
     });
 
-
-
     this.mainTextArea = new TextArea();
 
-    
     this.textBox = new TextBox();
 
     this.textOnlyPanel = new DockPanel();

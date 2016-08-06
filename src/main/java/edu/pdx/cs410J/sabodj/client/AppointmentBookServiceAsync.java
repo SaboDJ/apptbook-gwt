@@ -5,6 +5,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import java.util.ArrayList;
 
 
+
 /**
  * The client-side interface to the ping service
  */
@@ -18,4 +19,6 @@ public interface AppointmentBookServiceAsync {
   void getAppointmentBook(String owner, AsyncCallback<ArrayList<AppointmentBook>> async);
 
   void addAppointment(String owner, Appointment appt, AsyncCallback<String> async);
+
+  void getOwners(AsyncCallback<ArrayList<String>> async);
 }
