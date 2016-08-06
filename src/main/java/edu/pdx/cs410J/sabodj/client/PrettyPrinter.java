@@ -4,6 +4,8 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import edu.pdx.cs410J.AbstractAppointmentBook;
 import edu.pdx.cs410J.AppointmentBookDumper;
 
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -14,10 +16,12 @@ import java.util.Date;
  */
 public class PrettyPrinter implements AppointmentBookDumper {
 
+
   /**
    * Constructor for the <code>PrettyPrinter</code>
    */
-  public PrettyPrinter(){
+  PrettyPrinter(){
+
   }
 
 
@@ -28,15 +32,19 @@ public class PrettyPrinter implements AppointmentBookDumper {
    * we will output to standard out.
    * @param book
    *        The <code>AppointmentBook</code> we are outputting
+   * @throws IOException
+   *         Throws an exception if were outputting to a file and: file is a dir, file can't be opened,
+   *         file cant be written to
    */
   @Override
-  public void dump(AbstractAppointmentBook book){
+  public void dump(AbstractAppointmentBook book) throws IOException {
     // If there is nothing to output we just return
     if(book == null){
       return;
     }
     String output = bookToString((AppointmentBook) book);
     System.out.println(output);
+
   }
 
   /**
@@ -51,8 +59,6 @@ public class PrettyPrinter implements AppointmentBookDumper {
     StringBuffer buffer = new StringBuffer();
     ArrayList<Appointment> appts = (ArrayList<Appointment>)book.getAppointments();
     buffer.append("Hello " + book.getOwnerName() + ", you have " +  appts.size() + " appointments:\n");
-    // Set up a nice date output
-
     // Loop over all of the appointments in the book
     for(Appointment appt : appts) {
       buffer.append(appt.getDescription() + " lasting " + appt.getDurationInMinutes() +  " minutes. It starts at ");
@@ -60,9 +66,10 @@ public class PrettyPrinter implements AppointmentBookDumper {
     }
     return buffer.toString();
   }
-    private static String dateToString(Date date){
-        String pattern = "h:mm a EEE MMM d yyyy";
-        return  DateTimeFormat.getFormat(pattern).format(date);
-    }
+
+  private static String dateToString(Date date){
+    String pattern = "h:mm a EEE MMM d yyyy";
+    return  DateTimeFormat.getFormat(pattern).format(date);
+  }
 
 }

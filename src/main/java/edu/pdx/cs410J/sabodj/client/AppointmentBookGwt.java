@@ -10,6 +10,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -366,13 +367,28 @@ public class AppointmentBookGwt implements EntryPoint {
   //  AppointmentBookServiceAsync async = GWT.create(AppointmentBookService.class);
     // get the name to search for
     // call the async print
-    this.async.printAppointmentBook(null, new AsyncCallback<String>() {
+    this.async.getAppointmentBook(null, new AsyncCallback<ArrayList<AppointmentBook>>() {
 
       @Override
-      public void onSuccess(String book) {
+      public void onSuccess(ArrayList<AppointmentBook> list) {
         mainTextArea.setCharacterWidth(120);
         mainTextArea.setVisibleLines(40);
-        mainTextArea.setText(book);
+        // if(owner != null || !owner.equals("")) {
+        //  mainTextArea.setText(owner + " does not have any appointments");
+        //}
+
+        // make this an else
+        if(list.size() == 0){
+          mainTextArea.setText("There are no saved Appointment Books's");
+        }
+        else {
+          StringBuilder output = new StringBuilder();
+          for(int i = 0; i < list.size(); i++){
+            output.append( PrettyPrinter.bookToString(list.get(i)));
+            output.append("\n");
+          }
+          mainTextArea.setText(output.toString());
+        }
       }
 
       @Override
