@@ -9,6 +9,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 
+import java.text.ParseException;
 import java.util.Collection;
 
 /**
@@ -132,7 +133,7 @@ public class AppointmentBookGwt implements EntryPoint {
           StringBuffer output = new StringBuffer();
           output.append(getOwner());
           output.append("'s new appointment was added to his appointment book.");
-          mainTextArea.setCharacterWidth(50);
+          mainTextArea.setCharacterWidth(80);
           mainTextArea.setVisibleLines(1);
           mainTextArea.setText(output.toString());
           textOnlyPanel.setVisible(true);
@@ -140,6 +141,9 @@ public class AppointmentBookGwt implements EntryPoint {
           // Clear the text blocks
           ownerBox.setText("");
           descriptionBox.setText("");
+          resetBeginTime();
+          resetEndTime();
+
         }
       }
     });
@@ -184,6 +188,33 @@ public class AppointmentBookGwt implements EntryPoint {
     this.textBox = new TextBox();
 
     this.textOnlyPanel = new DockPanel();
+  }
+
+  /**
+   * Resets the begin time values to default
+   */
+  private void resetBeginTime() {
+    beginDay.setSelectedIndex(0);
+    beginMonth.setSelectedIndex(0);
+    beginYear.setSelectedIndex(0);
+    beginHour.setSelectedIndex(11);
+    beginMinute.setSelectedIndex(0);
+    beginAMPM.setSelectedIndex(0);
+
+  }
+
+
+  /**
+   * Resets the end time values to default
+   */
+  private void resetEndTime() {
+    endDay.setSelectedIndex(0);
+    endMonth.setSelectedIndex(0);
+    endYear.setSelectedIndex(0);
+    endHour.setSelectedIndex(11);
+    endMinute.setSelectedIndex(0);
+    endAMPM.setSelectedIndex(0);
+
   }
 
   /**
@@ -241,10 +272,9 @@ public class AppointmentBookGwt implements EntryPoint {
   }
 
 
-
-
-
-
+  /**
+   * This method prints out the readme to the main text box
+   */
   private void printReadme() {
     this.mainTextArea.setCharacterWidth(80);
     this.mainTextArea.setVisibleLines(20);
@@ -270,7 +300,36 @@ public class AppointmentBookGwt implements EntryPoint {
       alerter.alert("Description cannot be empty");
       return false;
     }
+
+    String beginTime = getDate(beginMonth, beginDay, beginYear, beginHour, beginMinute, beginAMPM);
+    String endtime = getDate(endMonth, endDay,endYear,endHour,endMinute,endAMPM);
+
+    try {
+      Appointment appt = new Appointment(description, beginTime, endtime);
+
+
+    } catch (ParseException pe){
+      alerter.alert("Error: " + pe.getMessage());
+      return false;
+    }
+
     return true;
+  }
+
+  private String getDate(ListBox month, ListBox day, ListBox year, ListBox hour, ListBox minute, ListBox ampm) {
+    StringBuilder date = new StringBuilder();
+    date.append(month.getSelectedItemText());
+    date.append("/");
+    date.append(day.getSelectedItemText());
+    date.append("/");
+    date.append(year.getSelectedItemText());
+    date.append(" ");
+    date.append(hour.getSelectedItemText());
+    date.append(":");
+    date.append(minute.getSelectedItemText());
+    date.append(" ");
+    date.append(ampm.getSelectedItemText());
+    return date.toString();
   }
 
 
