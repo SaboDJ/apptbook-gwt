@@ -31,7 +31,7 @@ public class AppointmentBookGwt implements EntryPoint {
   Button      addAppointmentButton;
   Button      searchAppointmentButton;
 
-  DockPanel   textOnlyPanel;
+  DockPanel readMePanel;
 
   // View Appointments
   HorizontalPanel viewApptsPanel;
@@ -80,7 +80,7 @@ public class AppointmentBookGwt implements EntryPoint {
         addApptButton.setVisible(false);
         searchButton.setVisible(false);
         searchPanel.setVisible(false);
-        textOnlyPanel.setVisible(true);
+        readMePanel.setVisible(true);
         viewApptsPanel.setVisible(false);
         printReadme();
       }
@@ -98,7 +98,7 @@ public class AppointmentBookGwt implements EntryPoint {
         addApptButton.setVisible(false);
         searchButton.setVisible(false);
         searchPanel.setVisible(false);
-        textOnlyPanel.setVisible(false);
+        readMePanel.setVisible(false);
 
         setOwnersList();
         viewApptsPanel.setVisible(true);
@@ -132,7 +132,7 @@ public class AppointmentBookGwt implements EntryPoint {
     addAppointmentButton.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(ClickEvent clickEvent) {
-        textOnlyPanel.setVisible(false);
+        readMePanel.setVisible(false);
         searchButton.setVisible(false);
         searchPanel.setVisible(false);
         addApptPanel.setVisible(true);
@@ -145,7 +145,7 @@ public class AppointmentBookGwt implements EntryPoint {
     searchAppointmentButton.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(ClickEvent clickEvent) {
-        textOnlyPanel.setVisible(false);
+        readMePanel.setVisible(false);
         addApptPanel.setVisible(false);
         addApptButton.setVisible(false);
         searchPanel.setVisible(true);
@@ -173,7 +173,7 @@ public class AppointmentBookGwt implements EntryPoint {
           mainTextArea.setCharacterWidth(80);
           mainTextArea.setVisibleLines(1);
           mainTextArea.setText(output.toString());
-          textOnlyPanel.setVisible(true);
+          readMePanel.setVisible(true);
 
           // Clear the text blocks
           ownerBox.setText("");
@@ -205,7 +205,7 @@ public class AppointmentBookGwt implements EntryPoint {
 
     this.textBox = new TextBox();
 
-    this.textOnlyPanel = new DockPanel();
+    this.readMePanel = new DockPanel();
   }
 
   /**
@@ -397,9 +397,9 @@ public class AppointmentBookGwt implements EntryPoint {
 //    rootPanel.add(panel);
 
     // Text panel for printing readme and appointment book
-    textOnlyPanel.setVisible(false);
-    textOnlyPanel.add(this.mainTextArea, DockPanel.CENTER);
-    rootPanel.add(textOnlyPanel);
+    readMePanel.setVisible(false);
+    readMePanel.add(this.mainTextArea, DockPanel.CENTER);
+    rootPanel.add(readMePanel);
 
     // Setup View Appointments Panel
     viewApptsPanel.setVisible(false);
@@ -441,6 +441,7 @@ public class AppointmentBookGwt implements EntryPoint {
     addApptPanel.add(apptPanel1);
     addApptPanel.add(apptPanel2);
     addApptPanel.add(apptPanel3);
+    addApptPanel.add(addApptButton);
     rootPanel.add(this.addApptPanel);
 
 
@@ -454,9 +455,8 @@ public class AppointmentBookGwt implements EntryPoint {
 //    rootPanel.add(searchPanel);
 
 
-    addApptButton.setVisible(false);
+
     searchButton.setVisible(false);
-    rootPanel.add(addApptButton);
     rootPanel.add(searchButton);
 
 
