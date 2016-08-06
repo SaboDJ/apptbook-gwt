@@ -14,17 +14,17 @@ import java.util.Map;
  */
 public class AppointmentBookServiceImpl extends RemoteServiceServlet implements AppointmentBookService
 {
-  private Map<String, AppointmentBook> data = new HashMap<>();
+  private Map<String, AppointmentBook> data;
 
 
-  @Override
-  public AppointmentBook createAppointmentBook(int numberOfAppointments) {
-    AppointmentBook book = new AppointmentBook();
-    for (int i = 0; i < numberOfAppointments; i++) {
-      book.addAppointment(new Appointment());
-    }
-    return book;
-  }
+//  @Override
+//  public AppointmentBook createAppointmentBook(int numberOfAppointments) {
+//    AppointmentBook book = new AppointmentBook();
+//    for (int i = 0; i < numberOfAppointments; i++) {
+//      book.addAppointment(new Appointment());
+//    }
+//    return book;
+//  }
 
   @Override
   protected void doUnexpectedFailure(Throwable unhandled) {
@@ -36,16 +36,17 @@ public class AppointmentBookServiceImpl extends RemoteServiceServlet implements 
   public String printAppointmentBook(String owner){
     String returnMessage = "";
     // If no owner print all books
-    if(owner == null){
-      if(data.size() != 0) {
-        for (AppointmentBook book : this.data.values()) {
-          returnMessage += PrettyPrinter.bookToString(book) + "\n";
-        }
-      }
-      else {
-        returnMessage = "There are no saved Appointment Books\n";
+    if(data == null || data.size() == 0){
+      returnMessage = "There are no saved Appointment Books\n";
+    }
+    // If no owenr passed in, print all Appointment Books
+    else if(owner == null){
+      for (AppointmentBook book : this.data.values()) {
+       // returnMessage += PrettyPrinter.bookToString(book) + "\n";
+        returnMessage += book.toString() + "\n";
       }
     }
+    // If an owner was passed in, print their book if it exists
     else {
       AppointmentBook book = data.get(owner);
       // If owner doesn't exits, return an appropriate message
@@ -54,7 +55,7 @@ public class AppointmentBookServiceImpl extends RemoteServiceServlet implements 
       }
       // return the owners appointment book printed pretty
       else {
-        returnMessage =  PrettyPrinter.bookToString(book);
+        returnMessage = book.toString();
       }
     }
 
@@ -63,6 +64,10 @@ public class AppointmentBookServiceImpl extends RemoteServiceServlet implements 
 
   @Override
   public String addAppointment(String owner, Appointment appt) {
+    if(data == null){
+      data = new HashMap<>();
+    }
+
     AppointmentBook book = data.get(owner);
     if(book == null){
       book = new AppointmentBook(owner, appt);

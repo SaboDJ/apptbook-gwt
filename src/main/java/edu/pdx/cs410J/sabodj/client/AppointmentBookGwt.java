@@ -177,13 +177,7 @@ public class AppointmentBookGwt implements EntryPoint {
       }
     });
 
-    button = new Button("Ping Server");
-    button.addClickHandler(new ClickHandler() {
-      @Override
-      public void onClick(ClickEvent clickEvent) {
-        createAppointments();
-      }
-    });
+
 
     this.mainTextArea = new TextArea();
 
@@ -310,7 +304,7 @@ public class AppointmentBookGwt implements EntryPoint {
     try {
       Appointment appt = new Appointment(description, beginTime, endtime);
    //   AppointmentBookServiceAsync async = GWT.create(AppointmentBookService.class);
-      async.addAppointment(owner, appt, new AsyncCallback<String>() {
+      this.async.addAppointment(owner, appt, new AsyncCallback<String>() {
 
         @Override
         public void onSuccess(String result) {
@@ -351,28 +345,28 @@ public class AppointmentBookGwt implements EntryPoint {
   }
 
 
-  private void createAppointments() {
-  //  AppointmentBookServiceAsync async = GWT.create(AppointmentBookService.class);
-    int numberOfAppointments = getNumberOfAppointments();
-    async.createAppointmentBook(numberOfAppointments, new AsyncCallback<AppointmentBook>() {
-
-      @Override
-      public void onSuccess(AppointmentBook airline) {
-        displayInAlertDialog(airline);
-      }
-
-      @Override
-      public void onFailure(Throwable ex) {
-        alert(ex);
-      }
-    });
-  }
+//  private void createAppointments() {
+//  //  AppointmentBookServiceAsync async = GWT.create(AppointmentBookService.class);
+//    int numberOfAppointments = getNumberOfAppointments();
+//    async.createAppointmentBook(numberOfAppointments, new AsyncCallback<AppointmentBook>() {
+//
+//      @Override
+//      public void onSuccess(AppointmentBook airline) {
+//        displayInAlertDialog(airline);
+//      }
+//
+//      @Override
+//      public void onFailure(Throwable ex) {
+//        alert(ex);
+//      }
+//    });
+//  }
 
   public void viewAppointmentBook(){
   //  AppointmentBookServiceAsync async = GWT.create(AppointmentBookService.class);
     // get the name to search for
     // call the async print
-    async.printAppointmentBook(null, new AsyncCallback<String>() {
+    this.async.printAppointmentBook(null, new AsyncCallback<String>() {
 
       @Override
       public void onSuccess(String book) {

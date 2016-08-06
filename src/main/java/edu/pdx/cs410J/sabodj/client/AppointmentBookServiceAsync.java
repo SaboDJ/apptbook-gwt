@@ -11,7 +11,7 @@ public interface AppointmentBookServiceAsync {
   /**
    * Return the current date/time on the server
    */
-  void createAppointmentBook(int numberOfAppointments, AsyncCallback<AppointmentBook> async);
+ // void createAppointmentBook(int numberOfAppointments, AsyncCallback<AppointmentBook> async);
 
   void printAppointmentBook(String owner, AsyncCallback<String> async);
 

@@ -17,7 +17,7 @@ public class PrettyPrinter implements AppointmentBookDumper {
   /**
    * Constructor for the <code>PrettyPrinter</code>
    */
-  PrettyPrinter(){
+  public PrettyPrinter(){
   }
 
 
