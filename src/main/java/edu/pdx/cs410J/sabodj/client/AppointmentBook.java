@@ -129,26 +129,3 @@ public class AppointmentBook extends AbstractAppointmentBook<Appointment> {
 }
 
 
-//public class AppointmentBook extends AbstractAppointmentBook<Appointment>
-//{
-//
-//    private Collection<Appointment> appts = new ArrayList<>();
-//
-//    @Override
-//    public String getOwnerName()
-//    {
-//        return "My Owner";
-//    }
-//
-//    @Override
-//    public Collection<Appointment> getAppointments()
-//    {
-//        return this.appts;
-//    }
-//
-//    @Override
-//    public void addAppointment( Appointment appt )
-//    {
-//        this.appts.add(appt);
-//    }
-//}

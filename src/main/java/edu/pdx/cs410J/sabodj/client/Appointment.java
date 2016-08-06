@@ -68,14 +68,6 @@ public class Appointment extends AbstractAppointment implements Comparable<Appoi
             throw new ParseException("Date cannot be null", 0);
         }
 
-//        // Check to make sure the date has 4 digits
-//        Calendar calendar = new GregorianCalendar();
-//        calendar.setTime(aDate);
-//        int year = calendar.get(Calendar.YEAR);
-//        if (year < 1000){
-//            throw new ParseException("Year must be four digits", 0);
-//        }
-
         // If there were no problems, returns date object;
         return aDate;
     }
