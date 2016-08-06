@@ -112,6 +112,10 @@ public class TimeFields {
         return date.toString();
     }
 
+    /**
+     * @param name if its a begin time or end time
+     * Returns a horizontal panel with date buttons and labels
+     */
     HorizontalPanel createDatePanel(String name){
         HorizontalPanel panel = new HorizontalPanel();
         panel.add(new Label(name + " Date"));
