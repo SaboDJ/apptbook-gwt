@@ -77,7 +77,7 @@ public class AppointmentBookGwt implements EntryPoint {
       @Override
       public void onClick(ClickEvent clickEvent) {
         addApptPanel.setVisible(false);
-        addApptButton.setVisible(false);
+       // addApptButton.setVisible(false);
         searchButton.setVisible(false);
         searchPanel.setVisible(false);
         readMePanel.setVisible(true);
@@ -95,7 +95,7 @@ public class AppointmentBookGwt implements EntryPoint {
       @Override
       public void onClick(ClickEvent clickEvent) {
         addApptPanel.setVisible(false);
-        addApptButton.setVisible(false);
+     //   addApptButton.setVisible(false);
         searchButton.setVisible(false);
         searchPanel.setVisible(false);
         readMePanel.setVisible(false);
@@ -136,7 +136,7 @@ public class AppointmentBookGwt implements EntryPoint {
         searchButton.setVisible(false);
         searchPanel.setVisible(false);
         addApptPanel.setVisible(true);
-        addApptButton.setVisible(true);
+ //       addApptButton.setVisible(true);
         viewApptsPanel.setVisible(false);
       }
     });
@@ -147,7 +147,7 @@ public class AppointmentBookGwt implements EntryPoint {
       public void onClick(ClickEvent clickEvent) {
         readMePanel.setVisible(false);
         addApptPanel.setVisible(false);
-        addApptButton.setVisible(false);
+ //       addApptButton.setVisible(false);
         searchPanel.setVisible(true);
         searchButton.setVisible(true);
         viewApptsPanel.setVisible(false);
@@ -163,8 +163,9 @@ public class AppointmentBookGwt implements EntryPoint {
       @Override
       public void onClick(ClickEvent clickEvent) {
         if (addAppointment()) {
-          addApptButton.setVisible(false);
           addApptPanel.setVisible(false);
+//          addApptButton.setVisible(false);
+//          addApptPanel.setVisible(false);
 
           // Print out the confirmation message
           StringBuffer output = new StringBuffer();
@@ -414,33 +415,9 @@ public class AppointmentBookGwt implements EntryPoint {
     apptPanel1.add(this.ownerBox);
     apptPanel1.add(new Label("Description"));
     apptPanel1.add(this.descriptionBox);
-    HorizontalPanel apptPanel2 = new HorizontalPanel();
-    apptPanel2.add(new Label("Begin Date"));
-    apptPanel2.add(this.begintTimeFields.month);
-    apptPanel2.add(new Label("/"));
-    apptPanel2.add(this.begintTimeFields.day);
-    apptPanel2.add(new Label("/"));
-    apptPanel2.add(this.begintTimeFields.year);
-    apptPanel2.add(new Label("...Begin Time"));
-    apptPanel2.add(this.begintTimeFields.hour);
-    apptPanel2.add(new Label(":"));
-    apptPanel2.add(this.begintTimeFields.minute);
-    apptPanel2.add(this.begintTimeFields.ampm);
-    HorizontalPanel apptPanel3 = new HorizontalPanel();
-    apptPanel3.add(new Label("...End Date"));
-    apptPanel3.add(this.endTimeFields.month);
-    apptPanel3.add(new Label("/"));
-    apptPanel3.add(this.endTimeFields.day);
-    apptPanel3.add(new Label("/"));
-    apptPanel3.add(this.endTimeFields.year);
-    apptPanel3.add(new Label("......End Time"));
-    apptPanel3.add(this.endTimeFields.hour);
-    apptPanel3.add(new Label(":"));
-    apptPanel3.add(this.endTimeFields.minute);
-    apptPanel3.add(this.endTimeFields.ampm);
     addApptPanel.add(apptPanel1);
-    addApptPanel.add(apptPanel2);
-    addApptPanel.add(apptPanel3);
+    addApptPanel.add(begintTimeFields.createDatePanel("Begin"));
+    addApptPanel.add(endTimeFields.createDatePanel("...End"));
     addApptPanel.add(addApptButton);
     rootPanel.add(this.addApptPanel);
 

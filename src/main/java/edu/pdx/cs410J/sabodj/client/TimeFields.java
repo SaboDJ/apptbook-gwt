@@ -1,5 +1,7 @@
 package edu.pdx.cs410J.sabodj.client;
 
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 
 
@@ -108,6 +110,23 @@ public class TimeFields {
         date.append(" ");
         date.append(ampm.getSelectedItemText());
         return date.toString();
+    }
+
+    HorizontalPanel createDatePanel(String name){
+        HorizontalPanel panel = new HorizontalPanel();
+        panel.add(new Label(name + " Date"));
+        panel.add(this.month);
+        panel.add(new Label("/"));
+        panel.add(this.day);
+        panel.add(new Label("/"));
+        panel.add(this.year);
+        panel.add(new Label("..." + name + " Time"));
+        panel.add(this.hour);
+        panel.add(new Label(":"));
+        panel.add(this.minute);
+        panel.add(this.ampm);
+        return panel;
+
     }
 
 }
