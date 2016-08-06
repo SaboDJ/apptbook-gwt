@@ -3,6 +3,8 @@ package edu.pdx.cs410J.sabodj.client;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
@@ -34,7 +36,7 @@ public class AppointmentBookGwt implements EntryPoint {
   // View Appointments
   HorizontalPanel viewApptsPanel;
   ListBox     ownersList;
-  TextBox     viewApptTextBox;
+  TextArea     viewApptTextBox;
 
   // Add Appointment
   VerticalPanel   addApptPanel;
@@ -84,6 +86,10 @@ public class AppointmentBookGwt implements EntryPoint {
       }
     });
 
+    // View Appointment
+    viewApptsPanel = new HorizontalPanel();
+    viewApptTextBox = new TextArea();
+
     viewAppointmenBookButton = new Button("View Appointment Book");
     viewAppointmenBookButton.addClickHandler(new ClickHandler() {
       @Override
@@ -96,8 +102,29 @@ public class AppointmentBookGwt implements EntryPoint {
 
         setOwnersList();
         viewApptsPanel.setVisible(true);
+        viewApptTextBox.setVisible(false);
 
-        viewAppointmentBook();
+       // viewAppointmentBook();
+      }
+    });
+    ownersList = new ListBox();
+    setOwnersList();
+    ownersList.addChangeHandler(new ChangeHandler() {
+      @Override
+      public void onChange(ChangeEvent changeEvent) {
+        String selected = ownersList.getSelectedItemText();
+        if(selected.equals("Select Owner")){
+          viewApptTextBox.setText("");
+          viewApptTextBox.setVisible(false);
+        }
+        // If it equals all, print all Appointment Books
+        else if(selected.equals("All")){
+          viewAppointmentBook(null);
+        }
+        // Else, print the selected Appointment Book
+        else{
+          viewAppointmentBook(selected);
+        }
       }
     });
 
@@ -128,11 +155,6 @@ public class AppointmentBookGwt implements EntryPoint {
       }
     });
 
-    // View Appointment
-    viewApptsPanel = new HorizontalPanel();
-    ownersList = new ListBox();
-    setOwnersList();
-    viewApptTextBox = new TextBox();
 
     // Add Appt Items
     this.addApptPanel = new VerticalPanel();
@@ -208,6 +230,7 @@ public class AppointmentBookGwt implements EntryPoint {
    */
   public void setOwnersList() {
     ownersList.clear();
+    ownersList.addItem("Select Owner");
     ownersList.addItem("All");
     this.async.getOwners( new AsyncCallback<ArrayList<String>>() {
       @Override
@@ -284,23 +307,22 @@ public class AppointmentBookGwt implements EntryPoint {
 //    });
 //  }
 
-  public void viewAppointmentBook(){
-  //  AppointmentBookServiceAsync async = GWT.create(AppointmentBookService.class);
-    // get the name to search for
-    // call the async print
-    this.async.getAppointmentBook(null, new AsyncCallback<ArrayList<AppointmentBook>>() {
+  public void viewAppointmentBook(String owner){
+    this.async.getAppointmentBook(owner, new AsyncCallback<ArrayList<AppointmentBook>>() {
 
       @Override
       public void onSuccess(ArrayList<AppointmentBook> list) {
-        mainTextArea.setCharacterWidth(120);
-        mainTextArea.setVisibleLines(40);
-        // if(owner != null || !owner.equals("")) {
-        //  mainTextArea.setText(owner + " does not have any appointments");
-        //}
+        viewApptTextBox.setVisible(true);
+        viewApptTextBox.setCharacterWidth(100);
+        viewApptTextBox.setVisibleLines(1);
+//         if(owner != null || !owner.equals("")) {
+//           viewApptTextBox.setText(owner + " does not have any appointments");
+//        }
 
-        // make this an else
         if(list.size() == 0){
-          mainTextArea.setText("There are no saved Appointment Books's");
+           viewApptTextBox.setCharacterWidth(80);
+           viewApptTextBox.setVisibleLines(1);
+           viewApptTextBox.setText("There are no saved Appointment Books's");
         }
         else {
           StringBuilder output = new StringBuilder();
@@ -309,7 +331,8 @@ public class AppointmentBookGwt implements EntryPoint {
             output.append(list.get(i).toString());
             output.append("\n");
           }
-          mainTextArea.setText(output.toString());
+           viewApptTextBox.setVisibleLines(40);
+           viewApptTextBox.setText(output.toString());
         }
       }
 
