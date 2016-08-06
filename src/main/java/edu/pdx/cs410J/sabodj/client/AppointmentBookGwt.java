@@ -19,6 +19,7 @@ public class AppointmentBookGwt implements EntryPoint {
   private final Alerter alerter;
 
   @VisibleForTesting
+  private  AppointmentBookServiceAsync async;
   Button      button;
   Button      helpButton;
   Button      viewAppointmenBookButton;
@@ -68,6 +69,8 @@ public class AppointmentBookGwt implements EntryPoint {
   }
 
   private void addWidgets() {
+    async = GWT.create(AppointmentBookService.class);
+
     helpButton = new Button("Help");
     helpButton.addClickHandler(new ClickHandler() {
       @Override
@@ -90,7 +93,7 @@ public class AppointmentBookGwt implements EntryPoint {
         searchButton.setVisible(false);
         searchPanel.setVisible(false);
         textOnlyPanel.setVisible(true);
-        viewAppointments();
+        viewAppointmentBook();
       }
     });
 
@@ -132,7 +135,7 @@ public class AppointmentBookGwt implements EntryPoint {
           // Print out the confirmation message
           StringBuffer output = new StringBuffer();
           output.append(getOwner());
-          output.append("'s new appointment was added to his appointment book.");
+          output.append("'s new appointment was successfully added.");
           mainTextArea.setCharacterWidth(80);
           mainTextArea.setVisibleLines(1);
           mainTextArea.setText(output.toString());
@@ -306,6 +309,21 @@ public class AppointmentBookGwt implements EntryPoint {
 
     try {
       Appointment appt = new Appointment(description, beginTime, endtime);
+   //   AppointmentBookServiceAsync async = GWT.create(AppointmentBookService.class);
+      async.addAppointment(owner, appt, new AsyncCallback<String>() {
+
+        @Override
+        public void onSuccess(String result) {
+          mainTextArea.setCharacterWidth(100);
+          mainTextArea.setVisibleLines(1);
+          mainTextArea.setText(result);
+        }
+
+        @Override
+        public void onFailure(Throwable ex) {
+          alert(ex);
+        }
+      });
 
 
     } catch (ParseException pe){
@@ -334,13 +352,33 @@ public class AppointmentBookGwt implements EntryPoint {
 
 
   private void createAppointments() {
-    AppointmentBookServiceAsync async = GWT.create(AppointmentBookService.class);
+  //  AppointmentBookServiceAsync async = GWT.create(AppointmentBookService.class);
     int numberOfAppointments = getNumberOfAppointments();
     async.createAppointmentBook(numberOfAppointments, new AsyncCallback<AppointmentBook>() {
 
       @Override
       public void onSuccess(AppointmentBook airline) {
         displayInAlertDialog(airline);
+      }
+
+      @Override
+      public void onFailure(Throwable ex) {
+        alert(ex);
+      }
+    });
+  }
+
+  public void viewAppointmentBook(){
+  //  AppointmentBookServiceAsync async = GWT.create(AppointmentBookService.class);
+    // get the name to search for
+    // call the async print
+    async.printAppointmentBook(null, new AsyncCallback<String>() {
+
+      @Override
+      public void onSuccess(String book) {
+        mainTextArea.setCharacterWidth(120);
+        mainTextArea.setVisibleLines(40);
+        mainTextArea.setText(book);
       }
 
       @Override

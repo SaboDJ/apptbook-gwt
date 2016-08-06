@@ -45,7 +45,7 @@ public class PrettyPrinter implements AppointmentBookDumper {
    *        The Appointment Book we are converting
    * Returns a nicely formatted String containing all contents of the Appointment Book
    */
-  public String bookToString(AppointmentBook book) {
+  public static String bookToString(AppointmentBook book) {
 
     // Build the output
     StringBuffer buffer = new StringBuffer();
@@ -60,7 +60,7 @@ public class PrettyPrinter implements AppointmentBookDumper {
     }
     return buffer.toString();
   }
-    private String dateToString(Date date){
+    private static String dateToString(Date date){
         String pattern = "h:mm a EEE MMM d yyyy";
         return  DateTimeFormat.getFormat(pattern).format(date);
     }
