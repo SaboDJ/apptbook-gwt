@@ -27,6 +27,17 @@ public interface AppointmentBookService extends RemoteService {
    */
   public String addAppointment(String owner, Appointment appt);
 
+  /**
+   * This method searches for all Appointments in a given range for a specific Appointment Book.
+   * If the Appointment Book doesnt exist it will return an Appropriate message, otherwise it will
+   * return a String containing all of the Appointment for a given owner within the range.
+   *
+   * @param owner the name of the Appointment Book to search
+   * @param beginTime the start of the range (inclusive)
+   * @param endTime the end of the range (inclusive)
+   * Returns a PrettyPrint format of the Appointments within the range
+   */
+  public String getAppointmentsInRange(String owner, String beginTime, String endTime);
 
   /**
    * Returns a list of all Appointment Book owners

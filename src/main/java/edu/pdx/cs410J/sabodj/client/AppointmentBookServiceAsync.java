@@ -12,15 +12,34 @@ import java.util.ArrayList;
 public interface AppointmentBookServiceAsync {
 
   /**
-   * Return the current date/time on the server
+   * @param owner the name of the Appointment Book to return
+   * Returns a String containing a PrettyPrint format of an Appointment Book
    */
- // void createAppointmentBook(int numberOfAppointments, AsyncCallback<AppointmentBook> async);
-
   void getAppointmentBook(String owner, AsyncCallback<String> async);
 
+  /**
+   * Adds an Appointment to the Appointment Books
+   * @param owner the name of the Appointment Book to add the Appointment to
+   * @param appt the Appointment being added
+   * Returns a String containing a confirmation message
+   */
   void addAppointment(String owner, Appointment appt, AsyncCallback<String> async);
 
-  void getOwners(AsyncCallback<ArrayList<String>> async);
+  /**
+   * This method searches for all Appointments in a given range for a specific Appointment Book.
+   * If the Appointment Book doesnt exist it will return an Appropriate message, otherwise it will
+   * return a String containing all of the Appointment for a given owner within the range.
+   *
+   * @param owner the name of the Appointment Book to search
+   * @param beginTime the start of the range (inclusive)
+   * @param endTime the end of the range (inclusive)
+   * Returns a PrettyPrint format of the Appointments within the range
+   */
+  void getAppointmentsInRange(String owner, String beginTime, String endTime, AsyncCallback<String> async);
 
+  /**
+   * Returns a list of all Appointment Book owners
+   */
+  void getOwners(AsyncCallback<ArrayList<String>> async);
 
 }

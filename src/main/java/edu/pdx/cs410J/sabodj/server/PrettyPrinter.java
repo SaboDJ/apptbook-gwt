@@ -53,15 +53,26 @@ public class PrettyPrinter implements AppointmentBookDumper {
     // Build the output
     StringBuffer buffer = new StringBuffer();
     ArrayList<Appointment> appts = (ArrayList<Appointment>)book.getAppointments();
-    buffer.append("Hello " + book.getOwnerName() + ", you have " +  appts.size() + " appointments:\n");
+    buffer.append("Hello " + book.getOwnerName() + ", you have " +  appts.size() + " appointment");
+    if(appts.size() == 1){
+      buffer.append(":\n");
+    } else {
+      buffer.append("s:\n");
+    }
 
     // Set up a nice date output
     DateFormat formatter= new SimpleDateFormat("h:mm a EEE MMM d yyyy");
 
     // Loop over all of the appointments in the book
+    int count = 1;
     for(Appointment appt : appts) {
-      buffer.append(appt.getDescription() + " lasting " + appt.getDurationInMinutes() +  " minutes. It starts at ");
-      buffer.append(formatter.format(appt.getBeginTime()) + " and ends at " + formatter.format(appt.getEndTime()) + "\n");
+//      buffer.append(appt.getDescription() + " lasting " + appt.getDurationInMinutes() +  " minutes. It starts at ");
+//      buffer.append(formatter.format(appt.getBeginTime()) + " and ends at " + formatter.format(appt.getEndTime()) + "\n");
+        buffer.append("  Appointment " + count + ": " + appt.getDescription() + "\n");
+      //  buffer.append("  Description: " + appt.getDescription() + "\n");
+        buffer.append("    Duration: " + appt.getDurationInMinutes() + " minutes\n");
+        buffer.append("    Begins at " + formatter.format(appt.getBeginTime()) + "\n");
+        buffer.append("    Ends at " + formatter.format(appt.getEndTime()) + "\n");
     }
 
     return buffer.toString();

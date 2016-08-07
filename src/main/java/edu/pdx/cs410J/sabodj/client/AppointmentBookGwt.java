@@ -279,12 +279,36 @@ public class AppointmentBookGwt implements EntryPoint {
     return true;
   }
 
+  /**
+   * Searches for all appointments for a given owner in a date range and
+   * outputs the results to the screen.
+   */
   private void searchInRange() {
     String owner = this.searchOwnerBox.getText();
     owner = owner.trim();
     if(owner == null || owner.equals("")){
       alerter.alert("Owner cannot be empty");
+    } else {
+      String beginTime = searchBeginTimeFields.getDate();
+      String endTime = searchEndTimeFields.getDate();
+      this.async.getAppointmentsInRange(owner,beginTime, endTime, new AsyncCallback<String>() {
+
+        @Override
+        public void onSuccess(String s) {
+          searchTextArea.setVisible(true);
+          searchTextArea.setCharacterWidth(120);
+          searchTextArea.setVisibleLines(s.split("[\n|\r]").length);
+          searchTextArea.setText(s);
+        }
+
+        @Override
+        public void onFailure(Throwable ex) {
+          alert(ex);
+        }
+      });
     }
+
+
 //    else {
 //      this.async.getAppointmentBook(owner, new AsyncCallback<ArrayList<AppointmentBook>>() {
 //        @Override
@@ -333,7 +357,7 @@ public class AppointmentBookGwt implements EntryPoint {
       public void onSuccess(String s) {
         viewApptTextBox.setVisible(true);
         viewApptTextBox.setCharacterWidth(120);
-        viewApptTextBox.setVisibleLines(40);
+        viewApptTextBox.setVisibleLines(s.split("[\n|\r]").length);
         viewApptTextBox.setText(s);
       }
       @Override
