@@ -82,6 +82,7 @@ public class AppointmentBookGwt implements EntryPoint {
     async = GWT.create(AppointmentBookService.class);
 
     helpButton = new Button("Help");
+    helpButton.setWidth("90px");
     helpButton.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(ClickEvent clickEvent) {
@@ -98,34 +99,62 @@ public class AppointmentBookGwt implements EntryPoint {
     helpTextArea = new TextArea();
 
     viewApptHelp = new Button("View Help");
+    viewApptHelp.setWidth("90px");
     viewApptHelp.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(ClickEvent clickEvent) {
-
+        helpTextArea.setText("View Appointment Book Help:\n" +
+                "The View Appointment Book page will let you view a single appointment book or all of the\n" +
+                "appointment books stored on the site. The dropdown menu on the left of the page will let\n" +
+                "you select a particular owner or all. When you click on your choice a text window will\n" +
+                "appear containing the related appointments.\n"
+        );
       }
     });
 
     addApptHelp = new Button("Add Help");
+    addApptHelp.setWidth("90px");
     addApptHelp.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(ClickEvent clickEvent) {
-
+        helpTextArea.setText("Add Appointment Help:\n" +
+                "The Add Appointment page will assist you in adding appointments to your appointment book.\n" +
+                "You can have multiple appointment books as long as they have different owners. If you add\n" +
+                "an appointment with an owner that does not yet exist, a new appointment book will be created\n\n" +
+                "Requirements: \n" +
+                "   Owner: the name of the appointment book\n" +
+                "   Description: a description of the appointment\n" +
+                "   Begin Time: when the appointment will start\n" +
+                "   End Time: when the appointment will end\n"
+        );
       }
     });
 
     searchHelp = new Button("Search Help");
+    searchHelp.setWidth("90px");
     searchHelp.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(ClickEvent clickEvent) {
-
+        helpTextArea.setText("Search Help:\n" +
+                "The search option will search for though an Appointment Book for all appointments between\n" +
+                "two dates. If the owner doesnt have an appointment book or the owner doesnt have any\n" +
+                "appointments between the give dates an appropiate message will be displayed. \n\n" +
+                "Requirements: \n" +
+                "   Owner: the name of the appointment book to search\n" +
+                "   Begin Time: the time equal or less than the appointments to search for\n" +
+                "   End Time: the time equal to or greater than the appointments to search for.\n"
+        );
       }
     });
 
     readmeHelp = new Button("ReadMe");
+    readmeHelp.setWidth("90px");
     readmeHelp.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(ClickEvent clickEvent) {
-
+        helpTextArea.setText("Name: DJ Sabo\n" +
+                "Project 5: Rich Internet Application For Appointment Book\n"
+        );
       }
     });
 
@@ -343,7 +372,7 @@ public class AppointmentBookGwt implements EntryPoint {
         @Override
         public void onSuccess(String s) {
           searchTextArea.setVisible(true);
-          searchTextArea.setCharacterWidth(120);
+          searchTextArea.setCharacterWidth(60);
           searchTextArea.setVisibleLines(s.split("[\n|\r]").length);
           searchTextArea.setText(s);
         }
@@ -366,7 +395,7 @@ public class AppointmentBookGwt implements EntryPoint {
       @Override
       public void onSuccess(String s) {
         viewApptTextBox.setVisible(true);
-        viewApptTextBox.setCharacterWidth(120);
+        viewApptTextBox.setCharacterWidth(60);
         viewApptTextBox.setVisibleLines(s.split("[\n|\r]").length);
         viewApptTextBox.setText(s);
       }

@@ -103,7 +103,8 @@ public class AppointmentBookServiceImpl extends RemoteServiceServlet implements 
                 Date endTime = convertStringToDate(endTimeString);
                 ArrayList<Appointment> list = book.getApptsInRange(beginTime, endTime);
                 if(list.size() == 0){
-                    return owner + " does not have any appointments between " + beginTime + " and " + endTime;
+                    DateFormat f = new SimpleDateFormat("h:mm a EEE MMM d yyyy");
+                    return owner + " does not have any appointments between " + f.format(beginTime) + " and " + f.format(endTime);
                 }
                 else {
                     AppointmentBook newBook = new AppointmentBook(owner);

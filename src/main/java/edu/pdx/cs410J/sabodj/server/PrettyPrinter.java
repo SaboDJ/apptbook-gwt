@@ -73,6 +73,7 @@ public class PrettyPrinter implements AppointmentBookDumper {
         buffer.append("    Duration: " + appt.getDurationInMinutes() + " minutes\n");
         buffer.append("    Begins at " + formatter.format(appt.getBeginTime()) + "\n");
         buffer.append("    Ends at " + formatter.format(appt.getEndTime()) + "\n");
+      count++;
     }
 
     return buffer.toString();
