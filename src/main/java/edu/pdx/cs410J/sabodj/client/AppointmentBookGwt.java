@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
+import static com.google.gwt.user.client.ui.HasHorizontalAlignment.ALIGN_CENTER;
+
 /**
  * A basic GWT class that makes sure that we can send an appointment book back from the server
  */
@@ -341,7 +343,7 @@ public class AppointmentBookGwt implements EntryPoint {
         @Override
         public void onSuccess(String result) {
           mainTextArea.setCharacterWidth(100);
-          mainTextArea.setVisibleLines(1);
+          mainTextArea.setVisibleLines(2);
           mainTextArea.setText(result);
         }
         @Override
@@ -493,24 +495,35 @@ public class AppointmentBookGwt implements EntryPoint {
     // Setup Add Appointment panel
     addApptPanel.setVisible(false);
     HorizontalPanel apptPanel1 = new HorizontalPanel();
-    apptPanel1.add(new Label("Owner"));
-    apptPanel1.add(this.ownerBox);
-    apptPanel1.add(new Label("Description"));
-    apptPanel1.add(this.descriptionBox);
+    Label ownerLabel = new Label("Owner");
+    ownerLabel.setWidth("80px");
+    ownerLabel.setAutoHorizontalAlignment(ALIGN_CENTER);
+    Label descriptionLabel = new Label("Description");
+    descriptionLabel.setWidth("80px");
+    descriptionLabel.setAutoHorizontalAlignment(ALIGN_CENTER);
+    apptPanel1.add(ownerLabel);
+    ownerBox.setWidth("131px");
+    apptPanel1.add(ownerBox);
+    apptPanel1.add(descriptionLabel);
+    apptPanel1.add(descriptionBox);
     addApptPanel.add(apptPanel1);
     addApptPanel.add(beginTimeFields.createDatePanel("Begin"));
-    addApptPanel.add(endTimeFields.createDatePanel("...End"));
+    addApptPanel.add(endTimeFields.createDatePanel("End"));
     addApptPanel.add(addApptButton);
-    rootPanel.add(this.addApptPanel);
+    rootPanel.add(addApptPanel);
 
     // Setup Search Panel
     searchPanel.setVisible(false);
     HorizontalPanel searchPan1 = new HorizontalPanel();
-    searchPan1.add(new Label("Owner"));
+    Label searchOwnerLabel = new Label("Owner");
+    searchOwnerLabel.setWidth("80px");
+    searchOwnerLabel.setAutoHorizontalAlignment(ALIGN_CENTER);
+    searchPan1.add(searchOwnerLabel);
+    searchOwnerBox.setWidth("131px");
     searchPan1.add(searchOwnerBox);
     searchPanel.add(searchPan1);
     searchPanel.add(searchBeginTimeFields.createDatePanel("Begin"));
-    searchPanel.add(searchEndTimeFields.createDatePanel("...End"));
+    searchPanel.add(searchEndTimeFields.createDatePanel("End"));
     searchPanel.add(searchButton);
     searchTextArea.setVisible(false);
     searchPanel.add(searchTextArea);

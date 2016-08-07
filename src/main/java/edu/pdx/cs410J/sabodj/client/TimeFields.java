@@ -1,8 +1,11 @@
 package edu.pdx.cs410J.sabodj.client;
 
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
+
+import static com.google.gwt.user.client.ui.HasHorizontalAlignment.ALIGN_CENTER;
 
 
 /**
@@ -124,14 +127,20 @@ public class TimeFields {
      * Returns a horizontal panel with date buttons and labels
      */
     HorizontalPanel createDatePanel(String name){
+        Label dateLabel = new Label(name + " Date");
+        dateLabel.setWidth("80px");
+        dateLabel.setAutoHorizontalAlignment(ALIGN_CENTER);
+        Label timeLabel = new Label(name + " Time");
+        timeLabel.setWidth("80px");
+        timeLabel.setAutoHorizontalAlignment(ALIGN_CENTER);
         HorizontalPanel panel = new HorizontalPanel();
-        panel.add(new Label(name + " Date"));
+        panel.add(dateLabel);
         panel.add(this.month);
         panel.add(new Label("/"));
         panel.add(this.day);
         panel.add(new Label("/"));
         panel.add(this.year);
-        panel.add(new Label("..." + name + " Time"));
+        panel.add(timeLabel);
         panel.add(this.hour);
         panel.add(new Label(":"));
         panel.add(this.minute);
