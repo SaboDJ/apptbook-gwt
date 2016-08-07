@@ -86,11 +86,8 @@ public class AppointmentBookGwt implements EntryPoint {
     helpButton.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(ClickEvent clickEvent) {
+        setPanelsFalse();
         helpPanel.setVisible(true);
-        addApptPanel.setVisible(false);
-        searchPanel.setVisible(false);
-        mainTextPanel.setVisible(false);
-        viewApptsPanel.setVisible(false);
         printReadme();
       }
     });
@@ -167,11 +164,7 @@ public class AppointmentBookGwt implements EntryPoint {
     viewAppointmenBookButton.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(ClickEvent clickEvent) {
-        helpPanel.setVisible(false);
-        addApptPanel.setVisible(false);
-        searchPanel.setVisible(false);
-        mainTextPanel.setVisible(false);
-
+        setPanelsFalse();
         setOwnersList();
         viewApptsPanel.setVisible(true);
         viewApptTextBox.setVisible(false);
@@ -204,11 +197,9 @@ public class AppointmentBookGwt implements EntryPoint {
     addAppointmentButton.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(ClickEvent clickEvent) {
-        helpPanel.setVisible(false);
-        mainTextPanel.setVisible(false);
-        searchPanel.setVisible(false);
+        setPanelsFalse();
         addApptPanel.setVisible(true);
-        viewApptsPanel.setVisible(false);
+
       }
     });
 
@@ -249,10 +240,7 @@ public class AppointmentBookGwt implements EntryPoint {
     searchAppointmentButton.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(ClickEvent clickEvent) {
-        helpPanel.setVisible(false);
-        mainTextPanel.setVisible(false);
-        addApptPanel.setVisible(false);
-        viewApptsPanel.setVisible(false);
+        setPanelsFalse();
         searchPanel.setVisible(true);
         searchTextArea.setVisible(false);
         searchOwnerBox.setText("");
@@ -279,6 +267,14 @@ public class AppointmentBookGwt implements EntryPoint {
 
     this.mainTextArea = new TextArea();
     this.mainTextPanel = new DockPanel();
+  }
+
+  private void setPanelsFalse(){
+    helpPanel.setVisible(false);
+    mainTextPanel.setVisible(false);
+    addApptPanel.setVisible(false);
+    viewApptsPanel.setVisible(false);
+    searchPanel.setVisible(false);
   }
 
   /**
