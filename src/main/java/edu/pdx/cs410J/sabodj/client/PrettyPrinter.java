@@ -4,7 +4,6 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import edu.pdx.cs410J.AbstractAppointmentBook;
 import edu.pdx.cs410J.AppointmentBookDumper;
 
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -42,8 +41,10 @@ public class PrettyPrinter implements AppointmentBookDumper {
     if(book == null){
       return;
     }
-    String output = bookToString((AppointmentBook) book);
-    System.out.println(output);
+    else {
+      String output = bookToString((AppointmentBook) book);
+      System.out.println(output);
+    }
 
   }
 
@@ -53,7 +54,7 @@ public class PrettyPrinter implements AppointmentBookDumper {
    *        The Appointment Book we are converting
    * Returns a nicely formatted String containing all contents of the Appointment Book
    */
-  public static String bookToString(AppointmentBook book) {
+  public String bookToString(AppointmentBook book) {
 
     // Build the output
     StringBuffer buffer = new StringBuffer();
@@ -67,7 +68,7 @@ public class PrettyPrinter implements AppointmentBookDumper {
     return buffer.toString();
   }
 
-  private static String dateToString(Date date){
+  private String dateToString(Date date){
     String pattern = "h:mm a EEE MMM d yyyy";
     return  DateTimeFormat.getFormat(pattern).format(date);
   }

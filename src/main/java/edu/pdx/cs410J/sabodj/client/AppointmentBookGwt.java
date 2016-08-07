@@ -51,6 +51,7 @@ public class AppointmentBookGwt implements EntryPoint {
   TimeFields  searchBeginTimeFields;
   TimeFields  searchEndTimeFields;
   Button      searchButton;
+  TextArea    searchTextArea;
 
   TextArea    mainTextArea;
 
@@ -144,8 +145,6 @@ public class AppointmentBookGwt implements EntryPoint {
       public void onClick(ClickEvent clickEvent) {
         if (addAppointment()) {
           addApptPanel.setVisible(false);
-//          addApptButton.setVisible(false);
-//          addApptPanel.setVisible(false);
 
           // Print out the confirmation message
           StringBuffer output = new StringBuffer();
@@ -188,15 +187,16 @@ public class AppointmentBookGwt implements EntryPoint {
     searchOwnerBox = new TextBox();
     searchBeginTimeFields = new TimeFields();
     searchEndTimeFields = new TimeFields();
+    searchTextArea = new TextArea();
 
     // Search for Items Button
     searchButton = new Button("Search");
     searchButton.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(ClickEvent clickEvent) {
-        searchPanel.setVisible(false);
-        searchButton.setVisible(false);
-        //searchAppointmentToBook();
+        //  searchPanel.setVisible(false);
+        //  searchButton.setVisible(false);
+        searchInRange();
       }
     });
 
@@ -204,6 +204,7 @@ public class AppointmentBookGwt implements EntryPoint {
     this.mainTextArea = new TextArea();
     this.readMePanel = new DockPanel();
   }
+
 
   /**
    * This method prints out the readme to the main text box
@@ -215,12 +216,12 @@ public class AppointmentBookGwt implements EntryPoint {
 
   }
 
-  private void viewAppointments() {
-    this.mainTextArea.setCharacterWidth(120);
-    this.mainTextArea.setVisibleLines(40);
-    setOwnersList();
-    this.mainTextArea.setText("Need to print out all appointments");
-  }
+//  private void viewAppointments() {
+//    this.mainTextArea.setCharacterWidth(120);
+//    this.mainTextArea.setVisibleLines(40);
+//    setOwnersList();
+//    this.mainTextArea.setText("Need to print out all appointments");
+//  }
 
   /**
    * Returns a ListBox containing the names of all the owners stored on the server
@@ -285,6 +286,38 @@ public class AppointmentBookGwt implements EntryPoint {
     return true;
   }
 
+  private void searchInRange() {
+    String owner = this.searchOwnerBox.getText();
+    String description = getDescription();
+    if(owner == null || owner.equals("")){
+      alerter.alert("Owner cannot be empty");
+    }
+    else {
+      String beginTime = searchBeginTimeFields.getDate();
+      String endTime = searchEndTimeFields.getDate();
+
+      this.async.getAppointmentBook(owner, new AsyncCallback<ArrayList<AppointmentBook>>() {
+        @Override
+        public void onSuccess(ArrayList<AppointmentBook> books) {
+          searchTextArea.setVisible(true);
+          searchTextArea.setCharacterWidth(100);
+          if (books.size() == 0) {
+            searchTextArea.setVisibleLines(1);
+            searchTextArea.setText("No results found.");
+          } else {
+            searchTextArea.setVisibleLines(20);
+            searchTextArea.setText(books.get(0).toString());
+          }
+        }
+
+        @Override
+        public void onFailure(Throwable ex) {
+          alert(ex);
+        }
+      });
+    }
+  }
+
 
 //  private void createAppointments() {
 //  //  AppointmentBookServiceAsync async = GWT.create(AppointmentBookService.class);
@@ -325,6 +358,7 @@ public class AppointmentBookGwt implements EntryPoint {
           for(int i = 0; i < list.size(); i++){
            // output.append( PrettyPrinter.bookToString(list.get(i)));
             output.append(list.get(i).toString());
+         //   output.append(list.get(i).prettyPrint());
             output.append("\n");
           }
            viewApptTextBox.setVisibleLines(40);
@@ -410,6 +444,8 @@ public class AppointmentBookGwt implements EntryPoint {
     searchPanel.add(searchBeginTimeFields.createDatePanel("Begin"));
     searchPanel.add(searchEndTimeFields.createDatePanel("...End"));
     searchPanel.add(searchButton);
+    searchTextArea.setVisible(false);
+    searchPanel.add(searchTextArea);
     rootPanel.add(searchPanel);
 
   }

@@ -147,6 +147,10 @@ public class AppointmentBook extends AbstractAppointmentBook<Appointment> {
 //        String pattern = "h:mm a EEE MMM d yyyy";
 //        return  DateTimeFormat.getFormat(pattern).format(date);
 //    }
+
+//    String prettyPrint(){
+//        return new PrettyPrinter().bookToString(this);
+//    }
 }
 
 
