@@ -129,24 +129,24 @@ public class AppointmentBook extends AbstractAppointmentBook<Appointment> {
     }
 
 
-//    public  String bookToString() {
-//
-//        Collections.sort(appts);
-//        // Build the output
-//        StringBuffer buffer = new StringBuffer();
-//        buffer.append("Hello " + this.owner + ", you have " +  this.appts.size() + " appointments:\n");
-//        // Loop over all of the appointments in the book
-//        for(Appointment appt : this.appts) {
-//            buffer.append(appt.getDescription() + " lasting " + appt.getDurationInMinutes() +  " minutes. It starts at ");
-//            buffer.append(dateToString(appt.getBeginTime()) + " and ends at " + dateToString(appt.getEndTime()) + "\n");
-//        }
-//        return buffer.toString();
-//    }
-//
-//    private String dateToString(Date date){
-//        String pattern = "h:mm a EEE MMM d yyyy";
-//        return  DateTimeFormat.getFormat(pattern).format(date);
-//    }
+    public  String bookToString() {
+
+        Collections.sort(appts);
+        // Build the output
+        StringBuffer buffer = new StringBuffer();
+        buffer.append("Hello " + this.owner + ", you have " +  this.appts.size() + " appointments:\n");
+        // Loop over all of the appointments in the book
+        for(Appointment appt : this.appts) {
+            buffer.append(appt.getDescription() + " lasting " + appt.getDurationInMinutes() +  " minutes. It starts at ");
+            buffer.append(dateToString(appt.getBeginTime()) + " and ends at " + dateToString(appt.getEndTime()) + "\n");
+        }
+        return buffer.toString();
+    }
+
+    private String dateToString(Date date){
+        String pattern = "h:mm a EEE MMM d yyyy";
+        return  DateTimeFormat.getFormat(pattern).format(date);
+    }
 
 //    String prettyPrint(){
 //        return new PrettyPrinter().bookToString(this);

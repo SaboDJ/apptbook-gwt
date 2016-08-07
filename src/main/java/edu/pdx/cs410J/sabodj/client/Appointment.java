@@ -149,7 +149,7 @@ public class Appointment extends AbstractAppointment implements Comparable<Appoi
     /**
      * Returns the length of the <code>Appointment</code> in minutes
      */
-    long getDurationInMinutes(){
+    public long getDurationInMinutes(){
         long duration = this.endTime.getTime() - this.beginTime.getTime();
         return duration/60000;
     }

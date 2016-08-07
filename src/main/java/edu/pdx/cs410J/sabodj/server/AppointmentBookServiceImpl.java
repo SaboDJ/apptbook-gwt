@@ -4,7 +4,6 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import edu.pdx.cs410J.sabodj.client.Appointment;
 import edu.pdx.cs410J.sabodj.client.AppointmentBook;
 import edu.pdx.cs410J.sabodj.client.AppointmentBookService;
-import edu.pdx.cs410J.sabodj.client.PrettyPrinter;
 
 import java.util.ArrayList;
 import java.util.Collections;

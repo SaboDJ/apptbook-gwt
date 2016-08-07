@@ -1,8 +1,10 @@
-package edu.pdx.cs410J.sabodj.client;
+package edu.pdx.cs410J.sabodj.server;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
 import edu.pdx.cs410J.AbstractAppointmentBook;
 import edu.pdx.cs410J.AppointmentBookDumper;
+import edu.pdx.cs410J.sabodj.client.Appointment;
+import edu.pdx.cs410J.sabodj.client.AppointmentBook;
 
 import java.io.IOException;
 import java.util.ArrayList;

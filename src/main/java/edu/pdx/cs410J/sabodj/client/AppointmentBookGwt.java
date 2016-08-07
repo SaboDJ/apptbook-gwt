@@ -176,9 +176,12 @@ public class AppointmentBookGwt implements EntryPoint {
       public void onClick(ClickEvent clickEvent) {
         readMePanel.setVisible(false);
         addApptPanel.setVisible(false);
-        searchPanel.setVisible(true);
         viewApptsPanel.setVisible(false);
-        // Call the search method
+        searchPanel.setVisible(true);
+        searchTextArea.setVisible(false);
+        searchOwnerBox.setText("");
+        searchBeginTimeFields.reset();
+        searchEndTimeFields.reset();
       }
     });
 
@@ -194,17 +197,13 @@ public class AppointmentBookGwt implements EntryPoint {
     searchButton.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(ClickEvent clickEvent) {
-        //  searchPanel.setVisible(false);
-        //  searchButton.setVisible(false);
         searchInRange();
       }
     });
 
-
     this.mainTextArea = new TextArea();
     this.readMePanel = new DockPanel();
   }
-
 
   /**
    * This method prints out the readme to the main text box
@@ -215,13 +214,6 @@ public class AppointmentBookGwt implements EntryPoint {
     this.mainTextArea.setText("Name: DJ Sabo\nProject 5: Rich Internet Application For Appointment Book\n");
 
   }
-
-//  private void viewAppointments() {
-//    this.mainTextArea.setCharacterWidth(120);
-//    this.mainTextArea.setVisibleLines(40);
-//    setOwnersList();
-//    this.mainTextArea.setText("Need to print out all appointments");
-//  }
 
   /**
    * Returns a ListBox containing the names of all the owners stored on the server
@@ -244,7 +236,11 @@ public class AppointmentBookGwt implements EntryPoint {
     });
   }
 
-
+  /**
+   * Reads the input from the AddAppointment panel and creates and appointment from it.
+   * Then sends the appointment to the server to be added to the data.
+   * Returns true if the appointment was successfully added, otherwise false.
+   */
   private boolean addAppointment(){
     String owner = getOwner();
     String description = getDescription();
@@ -256,57 +252,62 @@ public class AppointmentBookGwt implements EntryPoint {
       alerter.alert("Description cannot be empty");
       return false;
     }
-
       String beginTime = begintTimeFields.getDate();
       String endTime = endTimeFields.getDate();
 
     try {
       Appointment appt = new Appointment(description, beginTime, endTime);
       this.async.addAppointment(owner, appt, new AsyncCallback<String>() {
-
         @Override
         public void onSuccess(String result) {
           mainTextArea.setCharacterWidth(100);
           mainTextArea.setVisibleLines(1);
           mainTextArea.setText(result);
         }
-
         @Override
         public void onFailure(Throwable ex) {
           alert(ex);
         }
       });
 
-
     } catch (ParseException pe){
       alerter.alert("Error: " + pe.getMessage());
       return false;
     }
-
     return true;
   }
 
   private void searchInRange() {
     String owner = this.searchOwnerBox.getText();
-    String description = getDescription();
     if(owner == null || owner.equals("")){
       alerter.alert("Owner cannot be empty");
     }
     else {
-      String beginTime = searchBeginTimeFields.getDate();
-      String endTime = searchEndTimeFields.getDate();
-
       this.async.getAppointmentBook(owner, new AsyncCallback<ArrayList<AppointmentBook>>() {
         @Override
         public void onSuccess(ArrayList<AppointmentBook> books) {
           searchTextArea.setVisible(true);
-          searchTextArea.setCharacterWidth(100);
+          searchTextArea.setCharacterWidth(120);
           if (books.size() == 0) {
             searchTextArea.setVisibleLines(1);
             searchTextArea.setText("No results found.");
           } else {
-            searchTextArea.setVisibleLines(20);
-            searchTextArea.setText(books.get(0).toString());
+            String beginTime = searchBeginTimeFields.getDate();
+            String endTime = searchEndTimeFields.getDate();
+
+            try {
+              ArrayList<Appointment> list = books.get(0).getApptsInRange(beginTime, endTime);
+              AppointmentBook book = new AppointmentBook(books.get(0).getOwnerName());
+              for(Appointment appt : list){
+                book.addAppointment(appt);
+              }
+              searchTextArea.setVisibleLines(20);
+              searchTextArea.setText(book.bookToString());
+
+            } catch(ParseException pe){
+              alerter.alert(pe.getMessage());
+              return;
+            }
           }
         }
 
@@ -318,31 +319,17 @@ public class AppointmentBookGwt implements EntryPoint {
     }
   }
 
-
-//  private void createAppointments() {
-//  //  AppointmentBookServiceAsync async = GWT.create(AppointmentBookService.class);
-//    int numberOfAppointments = getNumberOfAppointments();
-//    async.createAppointmentBook(numberOfAppointments, new AsyncCallback<AppointmentBook>() {
-//
-//      @Override
-//      public void onSuccess(AppointmentBook airline) {
-//        displayInAlertDialog(airline);
-//      }
-//
-//      @Override
-//      public void onFailure(Throwable ex) {
-//        alert(ex);
-//      }
-//    });
-//  }
-
+  /**
+   * Prints the Appointment Book to the screen. If owner is null, prints all books
+   * @param owner the name of the Appointment Book to print
+     */
   public void viewAppointmentBook(String owner){
     this.async.getAppointmentBook(owner, new AsyncCallback<ArrayList<AppointmentBook>>() {
 
       @Override
       public void onSuccess(ArrayList<AppointmentBook> list) {
         viewApptTextBox.setVisible(true);
-        viewApptTextBox.setCharacterWidth(100);
+        viewApptTextBox.setCharacterWidth(120);
         viewApptTextBox.setVisibleLines(1);
 //         if(owner != null || !owner.equals("")) {
 //           viewApptTextBox.setText(owner + " does not have any appointments");
@@ -357,7 +344,7 @@ public class AppointmentBookGwt implements EntryPoint {
           StringBuilder output = new StringBuilder();
           for(int i = 0; i < list.size(); i++){
            // output.append( PrettyPrinter.bookToString(list.get(i)));
-            output.append(list.get(i).toString());
+            output.append(list.get(i).bookToString());
          //   output.append(list.get(i).prettyPrint());
             output.append("\n");
           }
@@ -403,6 +390,11 @@ public class AppointmentBookGwt implements EntryPoint {
     alerter.alert(ex.toString());
   }
 
+
+  /**
+   * Sets up the Root Panel and adds panels for Help, View Appointment Books,
+   * Add Appointments, and  Search
+   */
   @Override
   public void onModuleLoad() {
     RootPanel rootPanel = RootPanel.get();
