@@ -3,7 +3,7 @@ package edu.pdx.cs410J.sabodj.client;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import java.util.ArrayList;
-
+import java.util.Date;
 
 
 /**
@@ -29,13 +29,11 @@ public interface AppointmentBookServiceAsync {
    * This method searches for all Appointments in a given range for a specific Appointment Book.
    * If the Appointment Book doesnt exist it will return an Appropriate message, otherwise it will
    * return a String containing all of the Appointment for a given owner within the range.
-   *
-   * @param owner the name of the Appointment Book to search
+   *  @param owner the name of the Appointment Book to search
    * @param beginTime the start of the range (inclusive)
    * @param endTime the end of the range (inclusive)
-   * Returns a PrettyPrint format of the Appointments within the range
    */
-  void getAppointmentsInRange(String owner, String beginTime, String endTime, AsyncCallback<String> async);
+  void getAppointmentsInRange(String owner, Date beginTime, Date endTime, AsyncCallback<String> async);
 
   /**
    * Returns a list of all Appointment Book owners

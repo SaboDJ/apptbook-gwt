@@ -14,6 +14,7 @@ import com.google.gwt.user.client.ui.*;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 /**
  * A basic GWT class that makes sure that we can send an appointment book back from the server
@@ -366,23 +367,39 @@ public class AppointmentBookGwt implements EntryPoint {
     if(owner == null || owner.equals("")){
       alerter.alert("Owner cannot be empty");
     } else {
-      String beginTime = searchBeginTimeFields.getDate();
-      String endTime = searchEndTimeFields.getDate();
-      this.async.getAppointmentsInRange(owner,beginTime, endTime, new AsyncCallback<String>() {
+      String beginTimeString = searchBeginTimeFields.getDate();
+      String endTimeString = searchEndTimeFields.getDate();
 
-        @Override
-        public void onSuccess(String s) {
-          searchTextArea.setVisible(true);
-          searchTextArea.setCharacterWidth(60);
-          searchTextArea.setVisibleLines(s.split("[\n|\r]").length + 1);
-          searchTextArea.setText(s);
+
+      try {
+        Date beginTime = Appointment.convertStringToDate(beginTimeString);
+        Date endTime = Appointment.convertStringToDate(endTimeString);
+
+        if(beginTime.compareTo(endTime) > 0) {
+          alerter.alert("Start time must be before ending time");
+          return;
         }
 
-        @Override
-        public void onFailure(Throwable ex) {
-          alert(ex);
-        }
-      });
+        this.async.getAppointmentsInRange(owner,beginTime, endTime, new AsyncCallback<String>() {
+
+          @Override
+          public void onSuccess(String s) {
+            searchTextArea.setVisible(true);
+            searchTextArea.setCharacterWidth(60);
+            searchTextArea.setVisibleLines(s.split("[\n|\r]").length + 1);
+            searchTextArea.setText(s);
+          }
+
+          @Override
+          public void onFailure(Throwable ex) {
+            alert(ex);
+          }
+        });
+
+      } catch (ParseException pe){
+        alerter.alert(pe.getMessage());
+      }
+
     }
   }
 
