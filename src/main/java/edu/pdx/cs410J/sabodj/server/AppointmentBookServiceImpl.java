@@ -24,7 +24,6 @@ public class AppointmentBookServiceImpl extends RemoteServiceServlet implements 
     super.doUnexpectedFailure(unhandled);
   }
 
-
   /**
    * This method will convert a single or all appointment books to a String in the
    * PrettyPrint format.
@@ -86,7 +85,6 @@ public class AppointmentBookServiceImpl extends RemoteServiceServlet implements 
     /**
      * Returns a sorted ArrayList containing all fo the Appointment Book owner's names
      */
-
     @Override
     public ArrayList<String> getOwners() {
         ArrayList<String> list = new ArrayList<>();

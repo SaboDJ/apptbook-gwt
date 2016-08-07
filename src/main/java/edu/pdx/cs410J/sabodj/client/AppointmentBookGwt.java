@@ -30,7 +30,7 @@ public class AppointmentBookGwt implements EntryPoint {
   Button      addAppointmentButton;
   Button      searchAppointmentButton;
 
-  DockPanel readMePanel;
+  DockPanel   readMePanel;
 
   // View Appointments
   HorizontalPanel viewApptsPanel;
@@ -41,7 +41,7 @@ public class AppointmentBookGwt implements EntryPoint {
   VerticalPanel   addApptPanel;
   TextBox     ownerBox;
   TextBox     descriptionBox;
-  TimeFields  begintTimeFields;
+  TimeFields  beginTimeFields;
   TimeFields  endTimeFields;
   Button      addApptButton;
 
@@ -158,7 +158,7 @@ public class AppointmentBookGwt implements EntryPoint {
           // Clear the text blocks
           ownerBox.setText("");
           descriptionBox.setText("");
-          begintTimeFields.reset();
+          beginTimeFields.reset();
           endTimeFields.reset();
 
         }
@@ -166,7 +166,7 @@ public class AppointmentBookGwt implements EntryPoint {
     });
     this.ownerBox = new TextBox();
     this.descriptionBox = new TextBox();
-    this.begintTimeFields = new TimeFields();
+    this.beginTimeFields = new TimeFields();
     this.endTimeFields = new TimeFields();
 
     // Title Search Button
@@ -244,6 +244,8 @@ public class AppointmentBookGwt implements EntryPoint {
   private boolean addAppointment(){
     String owner = getOwner();
     String description = getDescription();
+    owner = owner.trim();
+    description = description.trim();
     if(owner == null || owner.equals("")){
       alerter.alert("Owner cannot be empty");
       return false;
@@ -252,7 +254,7 @@ public class AppointmentBookGwt implements EntryPoint {
       alerter.alert("Description cannot be empty");
       return false;
     }
-      String beginTime = begintTimeFields.getDate();
+      String beginTime = beginTimeFields.getDate();
       String endTime = endTimeFields.getDate();
 
     try {
@@ -279,6 +281,7 @@ public class AppointmentBookGwt implements EntryPoint {
 
   private void searchInRange() {
     String owner = this.searchOwnerBox.getText();
+    owner = owner.trim();
     if(owner == null || owner.equals("")){
       alerter.alert("Owner cannot be empty");
     }
@@ -333,12 +336,10 @@ public class AppointmentBookGwt implements EntryPoint {
         viewApptTextBox.setVisibleLines(40);
         viewApptTextBox.setText(s);
       }
-
       @Override
       public void onFailure(Throwable ex) {
         alert(ex);
       }
-
     });
   }
 
@@ -372,7 +373,6 @@ public class AppointmentBookGwt implements EntryPoint {
     alerter.alert(ex.toString());
   }
 
-
   /**
    * Sets up the Root Panel and adds panels for Help, View Appointment Books,
    * Add Appointments, and  Search
@@ -404,7 +404,7 @@ public class AppointmentBookGwt implements EntryPoint {
     apptPanel1.add(new Label("Description"));
     apptPanel1.add(this.descriptionBox);
     addApptPanel.add(apptPanel1);
-    addApptPanel.add(begintTimeFields.createDatePanel("Begin"));
+    addApptPanel.add(beginTimeFields.createDatePanel("Begin"));
     addApptPanel.add(endTimeFields.createDatePanel("...End"));
     addApptPanel.add(addApptButton);
     rootPanel.add(this.addApptPanel);

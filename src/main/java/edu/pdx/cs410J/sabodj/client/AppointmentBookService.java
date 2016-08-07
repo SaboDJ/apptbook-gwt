@@ -14,14 +14,23 @@ import java.util.ArrayList;
 public interface AppointmentBookService extends RemoteService {
 
   /**
-   * Returns the current date and time on the server
+   * @param owner the name of the Appointment Book to return
+   * Returns a String containing a PrettyPrint format of an Appointment Book
    */
- // public AppointmentBook createAppointmentBook(int numberOfAppointments);
-
   public String getAppointmentBook(String owner);
 
+  /**
+   * Adds an Appointment to the Appointment Books
+   * @param owner the name of the Appointment Book to add the Appointment to
+   * @param appt the Appointment being added
+   * Returns a String containing a confirmation message
+   */
   public String addAppointment(String owner, Appointment appt);
 
+
+  /**
+   * Returns a list of all Appointment Book owners
+   */
   public ArrayList<String> getOwners();
 
 }

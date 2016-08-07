@@ -12,42 +12,34 @@ import java.util.ArrayList;
 
 /**
  * Outputs the contents of an <code>AppointmentBook</code>, including all of its
- * <code>Appointment</code>'s in a nice, presentable format which can be outputted to a
- * file or to the screen.
+ * <code>Appointment</code>'s in a nice, presentable format
  */
 public class PrettyPrinter implements AppointmentBookDumper {
-
 
   /**
    * Constructor for the <code>PrettyPrinter</code>
    */
   PrettyPrinter(){
-
   }
-
 
   /**
    * Outputs the contents of the <code>AppointmentBook</code> in a pleasant, human readable format
-   * to a file or to the screen if the <code>AppointmentBook</code> exists. If not, does nothing
-   * and returns. If the constructor with a filename was used we will output to a file, otherwise
-   * we will output to standard out.
+   * to the screen if the <code>AppointmentBook</code> exists, if not it does nothing and returns.
+   *
    * @param book
    *        The <code>AppointmentBook</code> we are outputting
    * @throws IOException
-   *         Throws an exception if were outputting to a file and: file is a dir, file can't be opened,
-   *         file cant be written to
+   *          Should not throw any exception because it no longer involves a file.
    */
   @Override
   public void dump(AbstractAppointmentBook book) throws IOException {
     // If there is nothing to output we just return
     if(book == null){
       return;
-    }
-    else {
+    } else {
       String output = bookToString((AppointmentBook) book);
       System.out.println(output);
     }
-
   }
 
   /**
@@ -62,13 +54,16 @@ public class PrettyPrinter implements AppointmentBookDumper {
     StringBuffer buffer = new StringBuffer();
     ArrayList<Appointment> appts = (ArrayList<Appointment>)book.getAppointments();
     buffer.append("Hello " + book.getOwnerName() + ", you have " +  appts.size() + " appointments:\n");
+
     // Set up a nice date output
     DateFormat formatter= new SimpleDateFormat("h:mm a EEE MMM d yyyy");
+
     // Loop over all of the appointments in the book
     for(Appointment appt : appts) {
       buffer.append(appt.getDescription() + " lasting " + appt.getDurationInMinutes() +  " minutes. It starts at ");
       buffer.append(formatter.format(appt.getBeginTime()) + " and ends at " + formatter.format(appt.getEndTime()) + "\n");
     }
+
     return buffer.toString();
   }
 
