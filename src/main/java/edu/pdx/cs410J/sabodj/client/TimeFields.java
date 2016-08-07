@@ -47,7 +47,9 @@ public class TimeFields {
      */
     private ListBox setMinutes(){
         ListBox list = new ListBox();
-        for(int i= 0; i < 60; i++){
+        list.addItem("00");
+        list.addItem("05");
+        for(int i= 10; i < 60; i+=5){
             list.addItem(Integer.toString(i));
         }
         return list;
