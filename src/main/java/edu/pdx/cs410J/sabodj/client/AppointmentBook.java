@@ -97,7 +97,6 @@ public class AppointmentBook extends AbstractAppointmentBook<Appointment> {
         if(startTime.compareTo(endTime) > 0){
             throw new IllegalStateException("Start time must be before ending time");
         }
-
         // Loop over all of our appointments and add ones inside of the range to the list
         for(int i = 0; i < appts.size(); i++){
             Appointment appt = appts.get(i);

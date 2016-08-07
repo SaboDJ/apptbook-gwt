@@ -86,9 +86,9 @@ public class AppointmentBookGwt implements EntryPoint {
     helpButton.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(ClickEvent clickEvent) {
-        setPanelsFalse();
+        resetPanels();
         helpPanel.setVisible(true);
-        printReadme();
+       // printReadme();
       }
     });
     helpPanel = new HorizontalPanel();
@@ -100,7 +100,7 @@ public class AppointmentBookGwt implements EntryPoint {
     viewApptHelp.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(ClickEvent clickEvent) {
-        helpTextArea.setText("View Appointment Book Help:\n" +
+        helpTextArea.setText("View Appointment Book Help:\n\n" +
                 "The View Appointment Book page will let you view a single appointment book or all of the\n" +
                 "appointment books stored on the site. The dropdown menu on the left of the page will let\n" +
                 "you select a particular owner or all. When you click on your choice a text window will\n" +
@@ -114,10 +114,11 @@ public class AppointmentBookGwt implements EntryPoint {
     addApptHelp.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(ClickEvent clickEvent) {
-        helpTextArea.setText("Add Appointment Help:\n" +
+        helpTextArea.setText("Add Appointment Help:\n\n" +
                 "The Add Appointment page will assist you in adding appointments to your appointment book.\n" +
                 "You can have multiple appointment books as long as they have different owners. If you add\n" +
-                "an appointment with an owner that does not yet exist, a new appointment book will be created\n\n" +
+                "an appointment with an owner that does not yet exist, a new appointment book will be created\n" +
+                "for you.\n\n" +
                 "Requirements: \n" +
                 "   Owner: the name of the appointment book\n" +
                 "   Description: a description of the appointment\n" +
@@ -132,7 +133,7 @@ public class AppointmentBookGwt implements EntryPoint {
     searchHelp.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(ClickEvent clickEvent) {
-        helpTextArea.setText("Search Help:\n" +
+        helpTextArea.setText("Search Help:\n\n" +
                 "The search option will search for though an Appointment Book for all appointments between\n" +
                 "two dates. If the owner doesnt have an appointment book or the owner doesnt have any\n" +
                 "appointments between the give dates an appropiate message will be displayed. \n\n" +
@@ -150,7 +151,15 @@ public class AppointmentBookGwt implements EntryPoint {
       @Override
       public void onClick(ClickEvent clickEvent) {
         helpTextArea.setText("Name: DJ Sabo\n" +
-                "Project 5: Rich Internet Application For Appointment Book\n"
+                "Project 5: Rich Internet Application For Appointment Book\n\n" +
+                "   This program is designed to use our previously designed Appointment, AppointmentBook, and\n" +
+                "PrettyPrint classes and implement a rich internet application using the Google Web Toolkit.This\n" +
+                "application contains a help menu, the ability to view saved appointment books, the ability to\n" +
+                "create new appointment books, the ability to add appointments, and the ability to search for\n" +
+                "all appointments for in an appointment book based on a date range. The appointment books are\n" +
+                "saved on the server and accessed through the Google Web Toolkit's mechanism for communicating.\n" +
+                "The help menu contains instructions on how to do each of these operations. If there are any \n" +
+                "errors, such as an invalid input, a pop up window will appear with the given error."
         );
       }
     });
@@ -164,7 +173,7 @@ public class AppointmentBookGwt implements EntryPoint {
     viewAppointmenBookButton.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(ClickEvent clickEvent) {
-        setPanelsFalse();
+        resetPanels();
         setOwnersList();
         viewApptsPanel.setVisible(true);
         viewApptTextBox.setVisible(false);
@@ -197,7 +206,7 @@ public class AppointmentBookGwt implements EntryPoint {
     addAppointmentButton.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(ClickEvent clickEvent) {
-        setPanelsFalse();
+        resetPanels();
         addApptPanel.setVisible(true);
 
       }
@@ -240,7 +249,7 @@ public class AppointmentBookGwt implements EntryPoint {
     searchAppointmentButton.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(ClickEvent clickEvent) {
-        setPanelsFalse();
+        resetPanels();
         searchPanel.setVisible(true);
         searchTextArea.setVisible(false);
         searchOwnerBox.setText("");
@@ -269,22 +278,12 @@ public class AppointmentBookGwt implements EntryPoint {
     this.mainTextPanel = new DockPanel();
   }
 
-  private void setPanelsFalse(){
+  private void resetPanels(){
     helpPanel.setVisible(false);
     mainTextPanel.setVisible(false);
     addApptPanel.setVisible(false);
     viewApptsPanel.setVisible(false);
     searchPanel.setVisible(false);
-  }
-
-  /**
-   * This method prints out the readme to the main text box
-   */
-  private void printReadme() {
-    this.mainTextArea.setCharacterWidth(80);
-    this.mainTextArea.setVisibleLines(20);
-    this.mainTextArea.setText("Name: DJ Sabo\nProject 5: Rich Internet Application For Appointment Book\n");
-
   }
 
   /**
@@ -369,7 +368,7 @@ public class AppointmentBookGwt implements EntryPoint {
         public void onSuccess(String s) {
           searchTextArea.setVisible(true);
           searchTextArea.setCharacterWidth(60);
-          searchTextArea.setVisibleLines(s.split("[\n|\r]").length);
+          searchTextArea.setVisibleLines(s.split("[\n|\r]").length + 1);
           searchTextArea.setText(s);
         }
 
@@ -392,7 +391,7 @@ public class AppointmentBookGwt implements EntryPoint {
       public void onSuccess(String s) {
         viewApptTextBox.setVisible(true);
         viewApptTextBox.setCharacterWidth(60);
-        viewApptTextBox.setVisibleLines(s.split("[\n|\r]").length);
+        viewApptTextBox.setVisibleLines(s.split("[\n|\r]").length + 1);
         viewApptTextBox.setText(s);
       }
       @Override
@@ -451,7 +450,7 @@ public class AppointmentBookGwt implements EntryPoint {
     helpMenu.add(readmeHelp);
     helpPanel.add(helpMenu);
     helpTextArea.setCharacterWidth(100);
-    helpTextArea.setVisibleLines(30);
+    helpTextArea.setVisibleLines(12);
     helpPanel.add(helpTextArea);
     helpPanel.setVisible(false);
     rootPanel.add(helpPanel);
