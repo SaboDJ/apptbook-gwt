@@ -30,12 +30,21 @@ public class AppointmentBookGwt implements EntryPoint {
   Button      addAppointmentButton;
   Button      searchAppointmentButton;
 
-  DockPanel   readMePanel;
+  // Help Menu
+  HorizontalPanel helpPanel;
+  VerticalPanel   helpMenu;
+  Button      readmeHelp;
+  Button      viewApptHelp;
+  Button      addApptHelp;
+  Button      searchHelp;
+  TextArea    helpTextArea;
+  DockPanel   mainTextPanel;
+  TextArea    mainTextArea;
 
   // View Appointments
   HorizontalPanel viewApptsPanel;
   ListBox     ownersList;
-  TextArea     viewApptTextBox;
+  TextArea    viewApptTextBox;
 
   // Add Appointment
   VerticalPanel   addApptPanel;
@@ -52,8 +61,6 @@ public class AppointmentBookGwt implements EntryPoint {
   TimeFields  searchEndTimeFields;
   Button      searchButton;
   TextArea    searchTextArea;
-
-  TextArea    mainTextArea;
 
   public AppointmentBookGwt() {
     this(new Alerter() {
@@ -78,13 +85,50 @@ public class AppointmentBookGwt implements EntryPoint {
     helpButton.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(ClickEvent clickEvent) {
+        helpPanel.setVisible(true);
         addApptPanel.setVisible(false);
         searchPanel.setVisible(false);
-        readMePanel.setVisible(true);
+        mainTextPanel.setVisible(false);
         viewApptsPanel.setVisible(false);
         printReadme();
       }
     });
+    helpPanel = new HorizontalPanel();
+    helpMenu = new VerticalPanel();
+    helpTextArea = new TextArea();
+
+    viewApptHelp = new Button("View Help");
+    viewApptHelp.addClickHandler(new ClickHandler() {
+      @Override
+      public void onClick(ClickEvent clickEvent) {
+
+      }
+    });
+
+    addApptHelp = new Button("Add Help");
+    addApptHelp.addClickHandler(new ClickHandler() {
+      @Override
+      public void onClick(ClickEvent clickEvent) {
+
+      }
+    });
+
+    searchHelp = new Button("Search Help");
+    searchHelp.addClickHandler(new ClickHandler() {
+      @Override
+      public void onClick(ClickEvent clickEvent) {
+
+      }
+    });
+
+    readmeHelp = new Button("ReadMe");
+    readmeHelp.addClickHandler(new ClickHandler() {
+      @Override
+      public void onClick(ClickEvent clickEvent) {
+
+      }
+    });
+
 
     // View Appointment
     viewApptsPanel = new HorizontalPanel();
@@ -94,9 +138,10 @@ public class AppointmentBookGwt implements EntryPoint {
     viewAppointmenBookButton.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(ClickEvent clickEvent) {
+        helpPanel.setVisible(false);
         addApptPanel.setVisible(false);
         searchPanel.setVisible(false);
-        readMePanel.setVisible(false);
+        mainTextPanel.setVisible(false);
 
         setOwnersList();
         viewApptsPanel.setVisible(true);
@@ -130,7 +175,8 @@ public class AppointmentBookGwt implements EntryPoint {
     addAppointmentButton.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(ClickEvent clickEvent) {
-        readMePanel.setVisible(false);
+        helpPanel.setVisible(false);
+        mainTextPanel.setVisible(false);
         searchPanel.setVisible(false);
         addApptPanel.setVisible(true);
         viewApptsPanel.setVisible(false);
@@ -153,7 +199,7 @@ public class AppointmentBookGwt implements EntryPoint {
           mainTextArea.setCharacterWidth(80);
           mainTextArea.setVisibleLines(1);
           mainTextArea.setText(output.toString());
-          readMePanel.setVisible(true);
+          mainTextPanel.setVisible(true);
 
           // Clear the text blocks
           ownerBox.setText("");
@@ -174,7 +220,8 @@ public class AppointmentBookGwt implements EntryPoint {
     searchAppointmentButton.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(ClickEvent clickEvent) {
-        readMePanel.setVisible(false);
+        helpPanel.setVisible(false);
+        mainTextPanel.setVisible(false);
         addApptPanel.setVisible(false);
         viewApptsPanel.setVisible(false);
         searchPanel.setVisible(true);
@@ -202,7 +249,7 @@ public class AppointmentBookGwt implements EntryPoint {
     });
 
     this.mainTextArea = new TextArea();
-    this.readMePanel = new DockPanel();
+    this.mainTextPanel = new DockPanel();
   }
 
   /**
@@ -307,43 +354,6 @@ public class AppointmentBookGwt implements EntryPoint {
         }
       });
     }
-
-
-//    else {
-//      this.async.getAppointmentBook(owner, new AsyncCallback<ArrayList<AppointmentBook>>() {
-//        @Override
-//        public void onSuccess(ArrayList<AppointmentBook> books) {
-//          searchTextArea.setVisible(true);
-//          searchTextArea.setCharacterWidth(120);
-//          if (books.size() == 0) {
-//            searchTextArea.setVisibleLines(1);
-//            searchTextArea.setText("No results found.");
-//          } else {
-//            String beginTime = searchBeginTimeFields.getDate();
-//            String endTime = searchEndTimeFields.getDate();
-//
-//            try {
-//              ArrayList<Appointment> list = books.get(0).getApptsInRange(beginTime, endTime);
-//              AppointmentBook book = new AppointmentBook(books.get(0).getOwnerName());
-//              for(Appointment appt : list){
-//                book.addAppointment(appt);
-//              }
-//              searchTextArea.setVisibleLines(20);
-//              searchTextArea.setText(book.bookToString());
-//
-//            } catch(ParseException pe){
-//              alerter.alert(pe.getMessage());
-//              return;
-//            }
-//          }
-//        }
-//
-//        @Override
-//        public void onFailure(Throwable ex) {
-//          alert(ex);
-//        }
-//      });
-//    }
   }
 
   /**
@@ -409,10 +419,23 @@ public class AppointmentBookGwt implements EntryPoint {
     rootPanel.add(addAppointmentButton);
     rootPanel.add(searchAppointmentButton);
 
+    // Setup the Help Menu
+    helpMenu.add(viewApptHelp);
+    helpMenu.add(addApptHelp);
+    helpMenu.add(searchHelp);
+    helpMenu.add(readmeHelp);
+    helpPanel.add(helpMenu);
+    helpTextArea.setCharacterWidth(100);
+    helpTextArea.setVisibleLines(30);
+    helpPanel.add(helpTextArea);
+    helpPanel.setVisible(false);
+    rootPanel.add(helpPanel);
+
+
     // Text panel for printing readme and appointment book
-    readMePanel.setVisible(false);
-    readMePanel.add(this.mainTextArea, DockPanel.CENTER);
-    rootPanel.add(readMePanel);
+    mainTextPanel.setVisible(false);
+    mainTextPanel.add(this.mainTextArea, DockPanel.CENTER);
+    rootPanel.add(mainTextPanel);
 
     // Setup View Appointments Panel
     viewApptsPanel.setVisible(false);
