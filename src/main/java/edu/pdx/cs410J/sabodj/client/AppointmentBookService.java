@@ -18,7 +18,7 @@ public interface AppointmentBookService extends RemoteService {
    */
  // public AppointmentBook createAppointmentBook(int numberOfAppointments);
 
-  public ArrayList<AppointmentBook> getAppointmentBook(String owner);
+  public String getAppointmentBook(String owner);
 
   public String addAppointment(String owner, Appointment appt);
 

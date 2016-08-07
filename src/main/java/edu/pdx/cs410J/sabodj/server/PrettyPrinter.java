@@ -1,14 +1,14 @@
 package edu.pdx.cs410J.sabodj.server;
 
-import com.google.gwt.i18n.client.DateTimeFormat;
 import edu.pdx.cs410J.AbstractAppointmentBook;
 import edu.pdx.cs410J.AppointmentBookDumper;
 import edu.pdx.cs410J.sabodj.client.Appointment;
 import edu.pdx.cs410J.sabodj.client.AppointmentBook;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Outputs the contents of an <code>AppointmentBook</code>, including all of its
@@ -50,6 +50,33 @@ public class PrettyPrinter implements AppointmentBookDumper {
 
   }
 
+//  /**
+//   * Converts an appointment book to a string for easy output
+//   * @param book
+//   *        The Appointment Book we are converting
+//   * Returns a nicely formatted String containing all contents of the Appointment Book
+//   */
+//  public String bookToString(AppointmentBook book) {
+//
+//    // Build the output
+//    StringBuffer buffer = new StringBuffer();
+//    ArrayList<Appointment> appts = (ArrayList<Appointment>)book.getAppointments();
+//    buffer.append("Hello " + book.getOwnerName() + ", you have " +  appts.size() + " appointments:\n");
+//    // Loop over all of the appointments in the book
+//    for(Appointment appt : appts) {
+//      buffer.append(appt.getDescription() + " lasting " + appt.getDurationInMinutes() +  " minutes. It starts at ");
+//      buffer.append(dateToString(appt.getBeginTime()) + " and ends at " + dateToString(appt.getEndTime()) + "\n");
+//    }
+//    return buffer.toString();
+//  }
+//
+//  private String dateToString(Date date){
+////    String pattern = "h:mm a EEE MMM d yyyy";
+////    return  DateTimeFormat.getFormat(pattern).format(date);
+//    return DateTimeFormat.getFormat(DateTimeFormat.PredefinedFormat.DATE_SHORT).format(date);
+////    return "TempDate";
+//  }
+
   /**
    * Converts an appointment book to a string for easy output
    * @param book
@@ -62,17 +89,14 @@ public class PrettyPrinter implements AppointmentBookDumper {
     StringBuffer buffer = new StringBuffer();
     ArrayList<Appointment> appts = (ArrayList<Appointment>)book.getAppointments();
     buffer.append("Hello " + book.getOwnerName() + ", you have " +  appts.size() + " appointments:\n");
+    // Set up a nice date output
+    DateFormat formatter= new SimpleDateFormat("h:mm a EEE MMM d yyyy");
     // Loop over all of the appointments in the book
     for(Appointment appt : appts) {
       buffer.append(appt.getDescription() + " lasting " + appt.getDurationInMinutes() +  " minutes. It starts at ");
-      buffer.append(dateToString(appt.getBeginTime()) + " and ends at " + dateToString(appt.getEndTime()) + "\n");
+      buffer.append(formatter.format(appt.getBeginTime()) + " and ends at " + formatter.format(appt.getEndTime()) + "\n");
     }
     return buffer.toString();
-  }
-
-  private String dateToString(Date date){
-    String pattern = "h:mm a EEE MMM d yyyy";
-    return  DateTimeFormat.getFormat(pattern).format(date);
   }
 
 }

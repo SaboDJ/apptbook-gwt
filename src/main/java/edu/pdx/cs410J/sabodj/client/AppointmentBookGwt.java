@@ -282,41 +282,41 @@ public class AppointmentBookGwt implements EntryPoint {
     if(owner == null || owner.equals("")){
       alerter.alert("Owner cannot be empty");
     }
-    else {
-      this.async.getAppointmentBook(owner, new AsyncCallback<ArrayList<AppointmentBook>>() {
-        @Override
-        public void onSuccess(ArrayList<AppointmentBook> books) {
-          searchTextArea.setVisible(true);
-          searchTextArea.setCharacterWidth(120);
-          if (books.size() == 0) {
-            searchTextArea.setVisibleLines(1);
-            searchTextArea.setText("No results found.");
-          } else {
-            String beginTime = searchBeginTimeFields.getDate();
-            String endTime = searchEndTimeFields.getDate();
-
-            try {
-              ArrayList<Appointment> list = books.get(0).getApptsInRange(beginTime, endTime);
-              AppointmentBook book = new AppointmentBook(books.get(0).getOwnerName());
-              for(Appointment appt : list){
-                book.addAppointment(appt);
-              }
-              searchTextArea.setVisibleLines(20);
-              searchTextArea.setText(book.bookToString());
-
-            } catch(ParseException pe){
-              alerter.alert(pe.getMessage());
-              return;
-            }
-          }
-        }
-
-        @Override
-        public void onFailure(Throwable ex) {
-          alert(ex);
-        }
-      });
-    }
+//    else {
+//      this.async.getAppointmentBook(owner, new AsyncCallback<ArrayList<AppointmentBook>>() {
+//        @Override
+//        public void onSuccess(ArrayList<AppointmentBook> books) {
+//          searchTextArea.setVisible(true);
+//          searchTextArea.setCharacterWidth(120);
+//          if (books.size() == 0) {
+//            searchTextArea.setVisibleLines(1);
+//            searchTextArea.setText("No results found.");
+//          } else {
+//            String beginTime = searchBeginTimeFields.getDate();
+//            String endTime = searchEndTimeFields.getDate();
+//
+//            try {
+//              ArrayList<Appointment> list = books.get(0).getApptsInRange(beginTime, endTime);
+//              AppointmentBook book = new AppointmentBook(books.get(0).getOwnerName());
+//              for(Appointment appt : list){
+//                book.addAppointment(appt);
+//              }
+//              searchTextArea.setVisibleLines(20);
+//              searchTextArea.setText(book.bookToString());
+//
+//            } catch(ParseException pe){
+//              alerter.alert(pe.getMessage());
+//              return;
+//            }
+//          }
+//        }
+//
+//        @Override
+//        public void onFailure(Throwable ex) {
+//          alert(ex);
+//        }
+//      });
+//    }
   }
 
   /**
@@ -324,39 +324,21 @@ public class AppointmentBookGwt implements EntryPoint {
    * @param owner the name of the Appointment Book to print
      */
   public void viewAppointmentBook(String owner){
-    this.async.getAppointmentBook(owner, new AsyncCallback<ArrayList<AppointmentBook>>() {
+    this.async.getAppointmentBook(owner, new AsyncCallback<String>() {
 
       @Override
-      public void onSuccess(ArrayList<AppointmentBook> list) {
+      public void onSuccess(String s) {
         viewApptTextBox.setVisible(true);
         viewApptTextBox.setCharacterWidth(120);
-        viewApptTextBox.setVisibleLines(1);
-//         if(owner != null || !owner.equals("")) {
-//           viewApptTextBox.setText(owner + " does not have any appointments");
-//        }
-
-        if(list.size() == 0){
-           viewApptTextBox.setCharacterWidth(80);
-           viewApptTextBox.setVisibleLines(1);
-           viewApptTextBox.setText("There are no saved Appointment Books's");
-        }
-        else {
-          StringBuilder output = new StringBuilder();
-          for(int i = 0; i < list.size(); i++){
-           // output.append( PrettyPrinter.bookToString(list.get(i)));
-            output.append(list.get(i).bookToString());
-         //   output.append(list.get(i).prettyPrint());
-            output.append("\n");
-          }
-           viewApptTextBox.setVisibleLines(40);
-           viewApptTextBox.setText(output.toString());
-        }
+        viewApptTextBox.setVisibleLines(40);
+        viewApptTextBox.setText(s);
       }
 
       @Override
       public void onFailure(Throwable ex) {
         alert(ex);
       }
+
     });
   }
 
