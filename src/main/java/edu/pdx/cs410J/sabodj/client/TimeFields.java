@@ -6,7 +6,9 @@ import com.google.gwt.user.client.ui.ListBox;
 
 
 /**
- * Created by Gaming on 8/5/2016.
+ * This class is designed to using dates. I creates ListBox's for Date and Time fields and a reset()
+ * method to set each ListBox to its default value.
+ * It also creates a HorizontalPanel with the all of the Date and Time ListBoxes
  */
 public class TimeFields {
     ListBox day;
@@ -16,6 +18,9 @@ public class TimeFields {
     ListBox minute;
     ListBox ampm;
 
+    /**
+     * Constructor. Creates all of the ListBoxes and initializes them with their values.
+     */
     TimeFields(){
         day     = setDays();
         month   = setHoursMonths();

@@ -18,42 +18,23 @@ public class AppointmentBookServiceImpl extends RemoteServiceServlet implements 
 {
   private Map<String, AppointmentBook> data = new HashMap<>();
 
-
-//  @Override
-//  public AppointmentBook createAppointmentBook(int numberOfAppointments) {
-//    AppointmentBook book = new AppointmentBook();
-//    for (int i = 0; i < numberOfAppointments; i++) {
-//      book.addAppointment(new Appointment());
-//    }
-//    return book;
-//  }
-
   @Override
   protected void doUnexpectedFailure(Throwable unhandled) {
     unhandled.printStackTrace(System.err);
     super.doUnexpectedFailure(unhandled);
   }
 
+
+  /**
+   * This method will convert a single or all appointment books to a String in the
+   * PrettyPrint format.
+   *
+   * @param owner the name of the Appointment Book to return
+   * Returns a String containing an Appointment Book in the PrettyPrint format,
+   *              or all Appointment Books Pretty Printed if null was passed in
+   */
   @Override
   public String getAppointmentBook(String owner) {
-//    ArrayList<AppointmentBook> list = new ArrayList<>();
-//    // if we dont have any save Appointment Books, return empty list
-//    if (data.size() == 0)
-//      return list;
-//    // if no owner was passed in, return all Appointment Books
-//    if (owner == null) {
-//      for (AppointmentBook book : this.data.values()) {
-//        list.add(book);
-//      }
-//      return list;
-//    }
-//    // else, see if the owner has an Appointment Book
-//    AppointmentBook book =  data.get(owner);
-//    if(book != null){
-//      list.add(book);
-//  }
-//    return list;
-
     String returnMessage = "";
     // If no owner print all books
     if(data == null || data.size() == 0){
@@ -63,7 +44,6 @@ public class AppointmentBookServiceImpl extends RemoteServiceServlet implements 
     else if(owner == null){
       for (AppointmentBook book : this.data.values()) {
         returnMessage += new PrettyPrinter().bookToString(book) + "\n";
-      //  returnMessage += book.toString() + "\n";
       }
     }
     // If an owner was passed in, print their book if it exists
@@ -76,35 +56,44 @@ public class AppointmentBookServiceImpl extends RemoteServiceServlet implements 
       // return the owners appointment book printed pretty
       else {
         returnMessage = new PrettyPrinter().bookToString(book);
-      //  returnMessage =  book.toString() + "\n";
       }
     }
-
     return returnMessage;
   }
 
-  @Override
-  public String addAppointment(String owner, Appointment appt) {
-    AppointmentBook book = data.get(owner);
-    if(book == null){
-      book = new AppointmentBook(owner, appt);
-      data.put(owner, book);
-      return owner + "'s appointment was added to " + owner + "'s new Appointment Book\n";
-    }
-    else{
-      book.addAppointment(appt);
-      return owner + "'s appointment was added to their Appointment Book\n";
-    }
-  }
+   /**
+    * Adds an Appointment to the owners Appointment Book, if the Book doesn't exists it
+    * creates one.
+    *
+    * @param owner the name of the Appointment Book to add the Appointment to
+    * @param appt the Appointment to be added
+    * Returns a String containing a confirmation message
+    */
+   @Override
+   public String addAppointment(String owner, Appointment appt) {
+       AppointmentBook book = data.get(owner);
+       if(book == null) {
+           book = new AppointmentBook(owner, appt);
+           data.put(owner, book);
+           return owner + "'s appointment was added to " + owner + "'s new Appointment Book\n";
 
-  @Override
-  public ArrayList<String> getOwners() {
-    ArrayList<String> list = new ArrayList<>();
-    for (String owner : data.keySet() ){
-      list.add(owner);
-    }
-    Collections.sort(list);
-    return list;
-  }
+       } else {
+           book.addAppointment(appt);
+           return owner + "'s appointment was added to their Appointment Book\n";
+       }
+   }
 
+    /**
+     * Returns a sorted ArrayList containing all fo the Appointment Book owner's names
+     */
+
+    @Override
+    public ArrayList<String> getOwners() {
+        ArrayList<String> list = new ArrayList<>();
+        for (String owner : data.keySet() ){
+            list.add(owner);
+        }
+        Collections.sort(list);
+        return list;
+    }
 }

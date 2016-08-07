@@ -50,33 +50,6 @@ public class PrettyPrinter implements AppointmentBookDumper {
 
   }
 
-//  /**
-//   * Converts an appointment book to a string for easy output
-//   * @param book
-//   *        The Appointment Book we are converting
-//   * Returns a nicely formatted String containing all contents of the Appointment Book
-//   */
-//  public String bookToString(AppointmentBook book) {
-//
-//    // Build the output
-//    StringBuffer buffer = new StringBuffer();
-//    ArrayList<Appointment> appts = (ArrayList<Appointment>)book.getAppointments();
-//    buffer.append("Hello " + book.getOwnerName() + ", you have " +  appts.size() + " appointments:\n");
-//    // Loop over all of the appointments in the book
-//    for(Appointment appt : appts) {
-//      buffer.append(appt.getDescription() + " lasting " + appt.getDurationInMinutes() +  " minutes. It starts at ");
-//      buffer.append(dateToString(appt.getBeginTime()) + " and ends at " + dateToString(appt.getEndTime()) + "\n");
-//    }
-//    return buffer.toString();
-//  }
-//
-//  private String dateToString(Date date){
-////    String pattern = "h:mm a EEE MMM d yyyy";
-////    return  DateTimeFormat.getFormat(pattern).format(date);
-//    return DateTimeFormat.getFormat(DateTimeFormat.PredefinedFormat.DATE_SHORT).format(date);
-////    return "TempDate";
-//  }
-
   /**
    * Converts an appointment book to a string for easy output
    * @param book
