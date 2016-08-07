@@ -133,6 +133,67 @@ public class AppointmentBookServiceImpl extends RemoteServiceServlet implements 
     }
 
     /**
+     * Returns the View Appointment Book help information
+     */
+    @Override
+    public String getViewHelp() {
+        return "View Appointment Book Help:\n\n" +
+                "The View Appointment Book page will let you view a single appointment book or all of the\n" +
+                "appointment books stored on the site. The dropdown menu on the left of the page will let\n" +
+                "you select a particular owner or all. When you click on your choice a text window will\n" +
+                "appear containing the related appointments.\n";
+    }
+
+    /**
+     * Returns the Add Appointment help information
+     */
+    @Override
+    public String getAddHelp() {
+        return "Add Appointment Help:\n\n" +
+                "The Add Appointment page will assist you in adding appointments to your appointment book.\n" +
+                "You can have multiple appointment books as long as they have different owners. If you add\n" +
+                "an appointment with an owner that does not yet exist, a new appointment book will be created\n" +
+                "for you.\n\n" +
+                "Requirements: \n" +
+                "   Owner: the name of the appointment book\n" +
+                "   Description: a description of the appointment\n" +
+                "   Begin Time: when the appointment will start\n" +
+                "   End Time: when the appointment will end\n";
+    }
+
+    /**
+     * Returns the Search help information
+     */
+    @Override
+    public String getSearchHelp() {
+        return "Search Help:\n\n" +
+                "The search option will search for though an Appointment Book for all appointments between\n" +
+                "two dates. If the owner doesnt have an appointment book or the owner doesnt have any\n" +
+                "appointments between the give dates an appropiate message will be displayed. \n\n" +
+                "Requirements: \n" +
+                "   Owner: the name of the appointment book to search\n" +
+                "   Begin Time: the time equal or less than the appointments to search for\n" +
+                "   End Time: the time equal to or greater than the appointments to search for.\n";
+    }
+
+    /**
+     * Returns the ReadMe
+     */
+    @Override
+    public String getReadMe() {
+        return "Name: DJ Sabo\n" +
+                "Project 5: Rich Internet Application For Appointment Book\n\n" +
+                "   This program is designed to use our previously designed Appointment, AppointmentBook, and\n" +
+                "PrettyPrint classes and implement a rich internet application using the Google Web Toolkit.This\n" +
+                "application contains a help menu, the ability to view saved appointment books, the ability to\n" +
+                "create new appointment books, the ability to add appointments, and the ability to search for\n" +
+                "all appointments for in an appointment book based on a date range. The appointment books are\n" +
+                "saved on the server and accessed through the Google Web Toolkit's mechanism for communicating.\n" +
+                "The help menu contains instructions on how to do each of these operations. If there are any \n" +
+                "errors, such as an invalid input, a pop up window will appear with the given error.";
+    }
+
+    /**
      * This method will take a <code>String</code> formatted M/D/YYYY h:m and convert it into
      * a <code>LocalDateTime</code> object. It also validates that the date passed in is a real date
      * and accounts for leap years.

@@ -44,4 +44,24 @@ public interface AppointmentBookService extends RemoteService {
    */
   public ArrayList<String> getOwners();
 
+  /**
+   * Returns the View Appointment Book help information
+   */
+  public String getViewHelp();
+
+  /**
+   * Returns the Add Appointment help information
+   */
+  public String getAddHelp();
+
+  /**
+   * Returns the Search help information
+   */
+  public String getSearchHelp();
+
+  /**
+   * Returns the ReadMe
+   */
+  public String getReadMe();
+
 }

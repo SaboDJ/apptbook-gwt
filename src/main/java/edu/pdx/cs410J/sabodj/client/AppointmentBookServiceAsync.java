@@ -42,4 +42,23 @@ public interface AppointmentBookServiceAsync {
    */
   void getOwners(AsyncCallback<ArrayList<String>> async);
 
+  /**
+   * Returns the View Appointment Book help information
+   */
+  void getViewHelp(AsyncCallback<String> async);
+
+  /**
+   * Returns the Add Appointment help information
+   */
+  void getAddHelp(AsyncCallback<String> async);
+
+  /**
+   * Returns the Search help information
+   */
+  void getSearchHelp(AsyncCallback<String> async);
+
+  /**
+   * Returns the ReadMe
+   */
+  void getReadMe(AsyncCallback<String> async);
 }
